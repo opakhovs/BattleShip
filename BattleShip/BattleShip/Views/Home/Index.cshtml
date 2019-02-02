@@ -1,31 +1,933 @@
-﻿@{
-    ViewBag.Title = "Home Page";
+﻿@using BattleShip.Hubs;
+@{
+    ViewBag.Title = "Battleship";
+    Guid guid = Guid.NewGuid();
 }
 
-<div class="jumbotron">
-    <h1>ASP.NET</h1>
-    <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS and JavaScript.</p>
-    <p><a href="https://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
+<div class="body_wrap">
+    <div class="battlefields clearfix">
+        <div class="battlefield battlefield_self">
+            <div class="battlefield_gap">
+                <div class="battlefield_table_placeholder">
+                    <table class="battlefield_table">
+                        <tbody>
+                            <tr class="battlefield_row">
+                                <td class="battlefield_cell battlefield_cell_empty">
+                                    <div class="battlefield_cell_content" data-x="0" data-y="0">
+                                        <div class="marker marker_row">1</div>
+                                        <div class="marker marker_col">A</div>
+                                    </div>
+                                </td>
+                                <td class="battlefield_cell battlefield_cell_empty">
+                                    <div class="battlefield_cell_content" data-x="1" data-y="0">
+                                        <div class="marker marker_col">B</div>
+                                    </div>
+                                </td>
+                                <td class="battlefield_cell battlefield_cell_empty">
+                                    <div class="battlefield_cell_content" data-x="2" data-y="0">
+                                        <div class="marker marker_col">C</div>
+                                    </div>
+                                </td>
+                                <td class="battlefield_cell battlefield_cell_empty">
+                                    <div class="battlefield_cell_content" data-x="3" data-y="0">
+                                        <div class="marker marker_col">D</div>
+                                    </div>
+                                </td>                              
+                                <td class="battlefield_cell battlefield_cell_empty">
+                                    <div class="battlefield_cell_content" data-x="4" data-y="0">
+                                        <div class="marker marker_col">E</div>
+                                    </div>
+                                </td>
+                                <td class="battlefield_cell battlefield_cell_empty">
+                                    <div class="battlefield_cell_content" data-x="5" data-y="0">
+                                        <div class="marker marker_col">F</div>
+                                    </div>
+                                </td>
+                                <td class="battlefield_cell battlefield_cell_empty">
+                                    <div class="battlefield_cell_content" data-x="6" data-y="0">
+                                        <div class="marker marker_col">G</div>
+                                    </div>
+                                </td>
+                                <td class="battlefield_cell battlefield_cell_empty">
+                                    <div class="battlefield_cell_content" data-x="7" data-y="0">
+                                        <div class="marker marker_col">H</div>
+                                    </div>
+                                </td>
+                                <td class="battlefield_cell battlefield_cell_empty">
+                                    <div class="battlefield_cell_content" data-x="8" data-y="0">
+                                        <div class="marker marker_col">I</div>
+                                    </div>
+                                </td>
+                                <td class="battlefield_cell battlefield_cell_empty">
+                                    <div class="battlefield_cell_content" data-x="9" data-y="0">
+                                        <div class="marker marker_col">J</div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr class="battlefield_row">
+                                <td class="battlefield_cell battlefield_cell_empty">
+                                    <div class="battlefield_cell_content" data-x="0" data-y="1">
+                                        <div class="marker marker_row">2</div>
+                                    </div>
+                                </td>
+                                <td class="battlefield_cell battlefield_cell_empty">
+                                    <div class="battlefield_cell_content" data-x="1" data-y="1">
+                                    </div>
+                                </td>
+                                <td class="battlefield_cell battlefield_cell_empty">
+                                    <div class="battlefield_cell_content" data-x="2" data-y="1">
+                                    </div>
+                                </td>
+                                <td class="battlefield_cell battlefield_cell_empty">
+                                    <div class="battlefield_cell_content" data-x="3" data-y="1">
+                                    </div>
+                                </td>
+                                <td class="battlefield_cell battlefield_cell_empty">
+                                    <div class="battlefield_cell_content" data-x="4" data-y="1">
+                                    </div>
+                                </td>
+                                <td class="battlefield_cell battlefield_cell_empty">
+                                    <div class="battlefield_cell_content" data-x="5" data-y="1">
+                                    </div>
+                                </td>
+                                <td class="battlefield_cell battlefield_cell_empty">
+                                    <div class="battlefield_cell_content" data-x="6" data-y="1">
+                                    </div>
+                                </td>
+                                <td class="battlefield_cell battlefield_cell_empty">
+                                    <div class="battlefield_cell_content" data-x="7" data-y="1">
+                                    </div>
+                                </td>
+                                <td class="battlefield_cell battlefield_cell_empty">
+                                    <div class="battlefield_cell_content" data-x="8" data-y="1">
+                                    </div>
+                                </td>
+                                <td class="battlefield_cell battlefield_cell_empty">
+                                    <div class="battlefield_cell_content" data-x="9" data-y="1">
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr class="battlefield_row">
+                                <td class="battlefield_cell battlefield_cell_empty">
+                                    <div class="battlefield_cell_content" data-x="0" data-y="2">
+                                        <div class="marker marker_row">3</div>
+                                    </div>
+                                </td>
+                                <td class="battlefield_cell battlefield_cell_empty">
+                                    <div class="battlefield_cell_content" data-x="1" data-y="2">
+                                    </div>
+                                </td>
+                                <td class="battlefield_cell battlefield_cell_empty">
+                                    <div class="battlefield_cell_content" data-x="2" data-y="2">
+                                    </div>
+                                </td>
+                                <td class="battlefield_cell battlefield_cell_empty">
+                                    <div class="battlefield_cell_content" data-x="3" data-y="2">
+                                    </div>
+                                </td>
+                                <td class="battlefield_cell battlefield_cell_empty">
+                                    <div class="battlefield_cell_content" data-x="4" data-y="2">
+                                    </div>
+                                </td>
+                                <td class="battlefield_cell battlefield_cell_empty">
+                                    <div class="battlefield_cell_content" data-x="5" data-y="2">
+                                    </div>
+                                </td>
+                                <td class="battlefield_cell battlefield_cell_empty">
+                                    <div class="battlefield_cell_content" data-x="6" data-y="2">
+                                    </div>
+                                </td>
+                                <td class="battlefield_cell battlefield_cell_empty">
+                                    <div class="battlefield_cell_content" data-x="7" data-y="2">
+                                    </div>
+                                </td>
+                                <td class="battlefield_cell battlefield_cell_empty">
+                                    <div class="battlefield_cell_content" data-x="8" data-y="2">
+                                    </div>
+                                </td>
+                                <td class="battlefield_cell battlefield_cell_empty">
+                                    <div class="battlefield_cell_content" data-x="9" data-y="2">
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr class="battlefield_row">
+                                <td class="battlefield_cell battlefield_cell_empty">
+                                    <div class="battlefield_cell_content" data-x="0" data-y="3">
+                                        <div class="marker marker_row">4</div>
+                                    </div>
+                                </td>
+                                <td class="battlefield_cell battlefield_cell_empty">
+                                    <div class="battlefield_cell_content" data-x="1" data-y="3">
+                                    </div>
+                                </td>
+                                <td class="battlefield_cell battlefield_cell_empty">
+                                    <div class="battlefield_cell_content" data-x="2" data-y="3">
+                                    </div>
+                                </td>
+                                <td class="battlefield_cell battlefield_cell_empty">
+                                    <div class="battlefield_cell_content" data-x="3" data-y="3">
+                                    </div>
+                                </td>
+                                <td class="battlefield_cell battlefield_cell_empty">
+                                    <div class="battlefield_cell_content" data-x="4" data-y="3">
+                                    </div>
+                                </td>
+                                <td class="battlefield_cell battlefield_cell_empty">
+                                    <div class="battlefield_cell_content" data-x="5" data-y="3">
+                                    </div>
+                                </td>
+                                <td class="battlefield_cell battlefield_cell_empty">
+                                    <div class="battlefield_cell_content" data-x="6" data-y="3">
+                                    </div>
+                                </td>
+                                <td class="battlefield_cell battlefield_cell_empty">
+                                    <div class="battlefield_cell_content" data-x="7" data-y="3">
+                                    </div>
+                                </td>
+                                <td class="battlefield_cell battlefield_cell_empty">
+                                    <div class="battlefield_cell_content" data-x="8" data-y="3">
+                                    </div>
+                                </td>
+                                <td class="battlefield_cell battlefield_cell_empty">
+                                    <div class="battlefield_cell_content" data-x="9" data-y="3">
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr class="battlefield_row">
+                                <td class="battlefield_cell battlefield_cell_empty">
+                                    <div class="battlefield_cell_content" data-x="0" data-y="4">
+                                        <div class="marker marker_row">5</div>
+                                    </div>
+                                </td>
+                                <td class="battlefield_cell battlefield_cell_empty">
+                                    <div class="battlefield_cell_content" data-x="1" data-y="4">
+                                    </div>
+                                </td>
+                                <td class="battlefield_cell battlefield_cell_empty">
+                                    <div class="battlefield_cell_content" data-x="2" data-y="4">
+                                    </div>
+                                </td>
+                                <td class="battlefield_cell battlefield_cell_empty">
+                                    <div class="battlefield_cell_content" data-x="3" data-y="4">
+                                    </div>
+                                </td>
+                                <td class="battlefield_cell battlefield_cell_empty">
+                                    <div class="battlefield_cell_content" data-x="4" data-y="4">
+                                    </div>
+                                </td>
+                                <td class="battlefield_cell battlefield_cell_empty">
+                                    <div class="battlefield_cell_content" data-x="5" data-y="4">
+                                    </div>
+                                </td>
+                                <td class="battlefield_cell battlefield_cell_empty">
+                                    <div class="battlefield_cell_content" data-x="6" data-y="4">
+                                    </div>
+                                </td>
+                                <td class="battlefield_cell battlefield_cell_empty">
+                                    <div class="battlefield_cell_content" data-x="7" data-y="4">
+                                    </div>
+                                </td>
+                                <td class="battlefield_cell battlefield_cell_empty">
+                                    <div class="battlefield_cell_content" data-x="8" data-y="4">
+                                    </div>
+                                </td>
+                                <td class="battlefield_cell battlefield_cell_empty">
+                                    <div class="battlefield_cell_content" data-x="9" data-y="4">
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr class="battlefield_row">
+                                <td class="battlefield_cell battlefield_cell_empty">
+                                    <div class="battlefield_cell_content" data-x="0" data-y="5">
+                                        <div class="marker marker_row">6</div>
+                                    </div>
+                                </td>
+                                <td class="battlefield_cell battlefield_cell_empty">
+                                    <div class="battlefield_cell_content" data-x="1" data-y="5">
+                                    </div>
+                                </td>
+                                <td class="battlefield_cell battlefield_cell_empty">
+                                    <div class="battlefield_cell_content" data-x="2" data-y="5">
+                                    </div>
+                                </td>
+                                <td class="battlefield_cell battlefield_cell_empty">
+                                    <div class="battlefield_cell_content" data-x="3" data-y="5">
+                                    </div>
+                                </td>
+                                <td class="battlefield_cell battlefield_cell_empty">
+                                    <div class="battlefield_cell_content" data-x="4" data-y="5">
+                                    </div>
+                                </td>
+                                <td class="battlefield_cell battlefield_cell_empty">
+                                    <div class="battlefield_cell_content" data-x="5" data-y="5">
+                                    </div>
+                                </td>
+                                <td class="battlefield_cell battlefield_cell_empty">
+                                    <div class="battlefield_cell_content" data-x="6" data-y="5">
+                                    </div>
+                                </td>
+                                <td class="battlefield_cell battlefield_cell_empty">
+                                    <div class="battlefield_cell_content" data-x="7" data-y="5">
+                                    </div>
+                                </td>
+                                <td class="battlefield_cell battlefield_cell_empty">
+                                    <div class="battlefield_cell_content" data-x="8" data-y="5">
+                                    </div>
+                                </td>
+                                <td class="battlefield_cell battlefield_cell_empty">
+                                    <div class="battlefield_cell_content" data-x="9" data-y="5">
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr class="battlefield_row">
+                                <td class="battlefield_cell battlefield_cell_empty">
+                                    <div class="battlefield_cell_content" data-x="0" data-y="6">
+                                        <div class="marker marker_row">7</div>
+                                    </div>
+                                </td>
+                                <td class="battlefield_cell battlefield_cell_empty">
+                                    <div class="battlefield_cell_content" data-x="1" data-y="6">
+                                    </div>
+                                </td>
+                                <td class="battlefield_cell battlefield_cell_empty">
+                                    <div class="battlefield_cell_content" data-x="2" data-y="6">
+                                    </div>
+                                </td>
+                                <td class="battlefield_cell battlefield_cell_empty">
+                                    <div class="battlefield_cell_content" data-x="3" data-y="6">
+                                    </div>
+                                </td>
+                                <td class="battlefield_cell battlefield_cell_empty">
+                                    <div class="battlefield_cell_content" data-x="4" data-y="6">
+                                    </div>
+                                </td>
+                                <td class="battlefield_cell battlefield_cell_empty">
+                                    <div class="battlefield_cell_content" data-x="5" data-y="6">
+                                    </div>
+                                </td>
+                                <td class="battlefield_cell battlefield_cell_empty">
+                                    <div class="battlefield_cell_content" data-x="6" data-y="6">
+                                    </div>
+                                </td>
+                                <td class="battlefield_cell battlefield_cell_empty">
+                                    <div class="battlefield_cell_content" data-x="7" data-y="6">
+                                    </div>
+                                </td>
+                                <td class="battlefield_cell battlefield_cell_empty">
+                                    <div class="battlefield_cell_content" data-x="8" data-y="6">
+                                    </div>
+                                </td>
+                                <td class="battlefield_cell battlefield_cell_empty">
+                                    <div class="battlefield_cell_content" data-x="9" data-y="6">
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr class="battlefield_row">
+                                <td class="battlefield_cell battlefield_cell_empty">
+                                    <div class="battlefield_cell_content" data-x="0" data-y="7">
+                                        <div class="marker marker_row">8</div>
+                                    </div>
+                                </td>
+                                <td class="battlefield_cell battlefield_cell_empty">
+                                    <div class="battlefield_cell_content" data-x="1" data-y="7">
+                                    </div>
+                                </td>
+                                <td class="battlefield_cell battlefield_cell_empty">
+                                    <div class="battlefield_cell_content" data-x="2" data-y="7">
+                                    </div>
+                                </td>
+                                <td class="battlefield_cell battlefield_cell_empty">
+                                    <div class="battlefield_cell_content" data-x="3" data-y="7">
+                                    </div>
+                                </td>
+                                <td class="battlefield_cell battlefield_cell_empty">
+                                    <div class="battlefield_cell_content" data-x="4" data-y="7">
+                                    </div>
+                                </td>
+                                <td class="battlefield_cell battlefield_cell_empty">
+                                    <div class="battlefield_cell_content" data-x="5" data-y="7">
+                                    </div>
+                                </td>
+                                <td class="battlefield_cell battlefield_cell_empty">
+                                    <div class="battlefield_cell_content" data-x="6" data-y="7">
+                                    </div>
+                                </td>
+                                <td class="battlefield_cell battlefield_cell_empty">
+                                    <div class="battlefield_cell_content" data-x="7" data-y="7">
+                                    </div>
+                                </td>
+                                <td class="battlefield_cell battlefield_cell_empty">
+                                    <div class="battlefield_cell_content" data-x="8" data-y="7">
+                                    </div>
+                                </td>
+                                <td class="battlefield_cell battlefield_cell_empty">
+                                    <div class="battlefield_cell_content" data-x="9" data-y="7">
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr class="battlefield_row">
+                                <td class="battlefield_cell battlefield_cell_empty">
+                                    <div class="battlefield_cell_content" data-x="0" data-y="8">
+                                        <div class="marker marker_row">9</div>
+                                    </div>
+                                </td>
+                                <td class="battlefield_cell battlefield_cell_empty">
+                                    <div class="battlefield_cell_content" data-x="1" data-y="8">
+                                    </div>
+                                </td>
+                                <td class="battlefield_cell battlefield_cell_empty">
+                                    <div class="battlefield_cell_content" data-x="2" data-y="8">
+                                    </div>
+                                </td>
+                                <td class="battlefield_cell battlefield_cell_empty">
+                                    <div class="battlefield_cell_content" data-x="3" data-y="8">
+                                    </div>
+                                </td>
+                                <td class="battlefield_cell battlefield_cell_empty">
+                                    <div class="battlefield_cell_content" data-x="4" data-y="8">
+                                    </div>
+                                </td>
+                                <td class="battlefield_cell battlefield_cell_empty">
+                                    <div class="battlefield_cell_content" data-x="5" data-y="8">
+                                    </div>
+                                </td>
+                                <td class="battlefield_cell battlefield_cell_empty">
+                                    <div class="battlefield_cell_content" data-x="6" data-y="8">
+                                    </div>
+                                </td>
+                                <td class="battlefield_cell battlefield_cell_empty">
+                                    <div class="battlefield_cell_content" data-x="7" data-y="8">
+                                    </div>
+                                </td>
+                                <td class="battlefield_cell battlefield_cell_empty">
+                                    <div class="battlefield_cell_content" data-x="8" data-y="8">
+                                    </div>
+                                </td>
+                                <td class="battlefield_cell battlefield_cell_empty">
+                                    <div class="battlefield_cell_content" data-x="9" data-y="8">
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr class="battlefield_row">
+                                <td class="battlefield_cell battlefield_cell_empty">
+                                    <div class="battlefield_cell_content" data-x="0" data-y="9">
+                                        <div class="marker marker_row">10</div>
+                                    </div>
+                                </td>
+                                <td class="battlefield_cell battlefield_cell_empty">
+                                    <div class="battlefield_cell_content" data-x="1" data-y="9">
+                                    </div>
+                                </td>
+                                <td class="battlefield_cell battlefield_cell_empty">
+                                    <div class="battlefield_cell_content" data-x="2" data-y="9">
+                                    </div>
+                                </td>
+                                <td class="battlefield_cell battlefield_cell_empty">
+                                    <div class="battlefield_cell_content" data-x="3" data-y="9">
+                                    </div>
+                                </td>
+                                <td class="battlefield_cell battlefield_cell_empty">
+                                    <div class="battlefield_cell_content" data-x="4" data-y="9">
+                                    </div>
+                                </td>
+                                <td class="battlefield_cell battlefield_cell_empty">
+                                    <div class="battlefield_cell_content" data-x="5" data-y="9">
+                                    </div>
+                                </td>
+                                <td class="battlefield_cell battlefield_cell_empty">
+                                    <div class="battlefield_cell_content" data-x="6" data-y="9">
+                                    </div>
+                                </td>
+                                <td class="battlefield_cell battlefield_cell_empty">
+                                    <div class="battlefield_cell_content" data-x="7" data-y="9">
+                                    </div>
+                                </td>
+                                <td class="battlefield_cell battlefield_cell_empty">
+                                    <div class="battlefield_cell_content" data-x="8" data-y="9">
+                                    </div>
+                                </td>
+                                <td class="battlefield_cell battlefield_cell_empty">
+                                    <div class="battlefield_cell_content" data-x="9" data-y="9">
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="battlefield_label">Your field</div>
+            </div>
+        </div>
+        <div id="battlefield_rival" class="battlefield battlefield_rival battlefield_wait">
+            <div class="battlefield_gap">
+                <div class="battlefield_table_placeholder">
+                    <table class="battlefield_table">
+                        <tbody>
+                            <tr class="battlefield_row">
+                                <td class="battlefield_cell battlefield_cell_empty">
+                                    <div class="battlefield_cell_content" data-x="0" data-y="0">
+                                        <div class="marker marker_row">1</div>
+                                        <div class="marker marker_col">A</div>
+                                    </div>
+                                </td>
+                                <td class="battlefield_cell battlefield_cell_empty">
+                                    <div class="battlefield_cell_content" data-x="1" data-y="0">
+                                        <div class="marker marker_col">B</div>
+                                    </div>
+                                </td>
+                                <td class="battlefield_cell battlefield_cell_empty">
+                                    <div class="battlefield_cell_content" data-x="2" data-y="0">
+                                        <div class="marker marker_col">C</div>
+                                    </div>
+                                </td>
+                                <td class="battlefield_cell battlefield_cell_empty">
+                                    <div class="battlefield_cell_content" data-x="3" data-y="0">
+                                        <div class="marker marker_col">D</div>
+                                    </div>
+                                </td>
+                                <td class="battlefield_cell battlefield_cell_empty">
+                                    <div class="battlefield_cell_content" data-x="4" data-y="0">
+                                        <div class="marker marker_col">E</div>
+                                    </div>
+                                </td>
+                                <td class="battlefield_cell battlefield_cell_empty">
+                                    <div class="battlefield_cell_content" data-x="5" data-y="0">
+                                        <div class="marker marker_col">F</div>
+                                    </div>
+                                </td>
+                                <td class="battlefield_cell battlefield_cell_empty">
+                                    <div class="battlefield_cell_content" data-x="6" data-y="0">
+                                        <div class="marker marker_col">G</div>
+                                    </div>
+                                </td>
+                                <td class="battlefield_cell battlefield_cell_empty">
+                                    <div class="battlefield_cell_content" data-x="7" data-y="0">
+                                        <div class="marker marker_col">H</div>
+                                    </div>
+                                </td>
+                                <td class="battlefield_cell battlefield_cell_empty">
+                                    <div class="battlefield_cell_content" data-x="8" data-y="0">
+                                        <div class="marker marker_col">I</div>
+                                    </div>
+                                </td>
+                                <td class="battlefield_cell battlefield_cell_empty">
+                                    <div class="battlefield_cell_content" data-x="9" data-y="0">
+                                        <div class="marker marker_col">J</div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr class="battlefield_row">
+                                <td class="battlefield_cell battlefield_cell_empty">
+                                    <div class="battlefield_cell_content" data-x="0" data-y="1">
+                                        <div class="marker marker_row">2</div>
+                                    </div>
+                                </td>
+                                <td class="battlefield_cell battlefield_cell_empty">
+                                    <div class="battlefield_cell_content" data-x="1" data-y="1">
+                                    </div>
+                                </td>
+                                <td class="battlefield_cell battlefield_cell_empty">
+                                    <div class="battlefield_cell_content" data-x="2" data-y="1">
+                                    </div>
+                                </td>
+                                <td class="battlefield_cell battlefield_cell_empty">
+                                    <div class="battlefield_cell_content" data-x="3" data-y="1">
+                                    </div>
+                                </td>
+                                <td class="battlefield_cell battlefield_cell_empty">
+                                    <div class="battlefield_cell_content" data-x="4" data-y="1">
+                                    </div>
+                                </td>
+                                <td class="battlefield_cell battlefield_cell_empty">
+                                    <div class="battlefield_cell_content" data-x="5" data-y="1">
+                                    </div>
+                                </td>
+                                <td class="battlefield_cell battlefield_cell_empty">
+                                    <div class="battlefield_cell_content" data-x="6" data-y="1">
+                                    </div>
+                                </td>
+                                <td class="battlefield_cell battlefield_cell_empty">
+                                    <div class="battlefield_cell_content" data-x="7" data-y="1">
+                                    </div>
+                                </td>
+                                <td class="battlefield_cell battlefield_cell_empty">
+                                    <div class="battlefield_cell_content" data-x="8" data-y="1">
+                                    </div>
+                                </td>
+                                <td class="battlefield_cell battlefield_cell_empty">
+                                    <div class="battlefield_cell_content" data-x="9" data-y="1">
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr class="battlefield_row">
+                                <td class="battlefield_cell battlefield_cell_empty">
+                                    <div class="battlefield_cell_content" data-x="0" data-y="2">
+                                        <div class="marker marker_row">3</div>
+                                    </div>
+                                </td>
+                                <td class="battlefield_cell battlefield_cell_empty">
+                                    <div class="battlefield_cell_content" data-x="1" data-y="2">
+                                    </div>
+                                </td>
+                                <td class="battlefield_cell battlefield_cell_empty">
+                                    <div class="battlefield_cell_content" data-x="2" data-y="2">
+                                    </div>
+                                </td>
+                                <td class="battlefield_cell battlefield_cell_empty">
+                                    <div class="battlefield_cell_content" data-x="3" data-y="2">
+                                    </div>
+                                </td>
+                                <td class="battlefield_cell battlefield_cell_empty">
+                                    <div class="battlefield_cell_content" data-x="4" data-y="2">
+                                    </div>
+                                </td>
+                                <td class="battlefield_cell battlefield_cell_empty">
+                                    <div class="battlefield_cell_content" data-x="5" data-y="2">
+                                    </div>
+                                </td>
+                                <td class="battlefield_cell battlefield_cell_empty">
+                                    <div class="battlefield_cell_content" data-x="6" data-y="2">
+                                    </div>
+                                </td>
+                                <td class="battlefield_cell battlefield_cell_empty">
+                                    <div class="battlefield_cell_content" data-x="7" data-y="2">
+                                    </div>
+                                </td>
+                                <td class="battlefield_cell battlefield_cell_empty">
+                                    <div class="battlefield_cell_content" data-x="8" data-y="2">
+                                    </div>
+                                </td>
+                                <td class="battlefield_cell battlefield_cell_empty">
+                                    <div class="battlefield_cell_content" data-x="9" data-y="2">
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr class="battlefield_row">
+                                <td class="battlefield_cell battlefield_cell_empty">
+                                    <div class="battlefield_cell_content" data-x="0" data-y="3">
+                                        <div class="marker marker_row">4</div>
+                                    </div>
+                                </td>
+                                <td class="battlefield_cell battlefield_cell_empty">
+                                    <div class="battlefield_cell_content" data-x="1" data-y="3">
+                                    </div>
+                                </td>
+                                <td class="battlefield_cell battlefield_cell_empty">
+                                    <div class="battlefield_cell_content" data-x="2" data-y="3">
+                                    </div>
+                                </td>
+                                <td class="battlefield_cell battlefield_cell_empty">
+                                    <div class="battlefield_cell_content" data-x="3" data-y="3">
+                                    </div>
+                                </td>
+                                <td class="battlefield_cell battlefield_cell_empty">
+                                    <div class="battlefield_cell_content" data-x="4" data-y="3">
+                                    </div>
+                                </td>
+                                <td class="battlefield_cell battlefield_cell_empty">
+                                    <div class="battlefield_cell_content" data-x="5" data-y="3">
+                                    </div>
+                                </td>
+                                <td class="battlefield_cell battlefield_cell_empty">
+                                    <div class="battlefield_cell_content" data-x="6" data-y="3">
+                                    </div>
+                                </td>
+                                <td class="battlefield_cell battlefield_cell_empty">
+                                    <div class="battlefield_cell_content" data-x="7" data-y="3">
+                                    </div>
+                                </td>
+                                <td class="battlefield_cell battlefield_cell_empty">
+                                    <div class="battlefield_cell_content" data-x="8" data-y="3">
+                                    </div>
+                                </td>
+                                <td class="battlefield_cell battlefield_cell_empty">
+                                    <div class="battlefield_cell_content" data-x="9" data-y="3">
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr class="battlefield_row">
+                                <td class="battlefield_cell battlefield_cell_empty">
+                                    <div class="battlefield_cell_content" data-x="0" data-y="4">
+                                        <div class="marker marker_row">5</div>
+                                    </div>
+                                </td>
+                                <td class="battlefield_cell battlefield_cell_empty">
+                                    <div class="battlefield_cell_content" data-x="1" data-y="4">
+                                    </div>
+                                </td>
+                                <td class="battlefield_cell battlefield_cell_empty">
+                                    <div class="battlefield_cell_content" data-x="2" data-y="4">
+                                    </div>
+                                </td>
+                                <td class="battlefield_cell battlefield_cell_empty">
+                                    <div class="battlefield_cell_content" data-x="3" data-y="4">
+                                    </div>
+                                </td>
+                                <td class="battlefield_cell battlefield_cell_empty">
+                                    <div class="battlefield_cell_content" data-x="4" data-y="4">
+                                    </div>
+                                </td>
+                                <td class="battlefield_cell battlefield_cell_empty">
+                                    <div class="battlefield_cell_content" data-x="5" data-y="4">
+                                    </div>
+                                </td>
+                                <td class="battlefield_cell battlefield_cell_empty">
+                                    <div class="battlefield_cell_content" data-x="6" data-y="4">
+                                    </div>
+                                </td>
+                                <td class="battlefield_cell battlefield_cell_empty">
+                                    <div class="battlefield_cell_content" data-x="7" data-y="4">
+                                    </div>
+                                </td>
+                                <td class="battlefield_cell battlefield_cell_empty">
+                                    <div class="battlefield_cell_content" data-x="8" data-y="4">
+                                    </div>
+                                </td>
+                                <td class="battlefield_cell battlefield_cell_empty">
+                                    <div class="battlefield_cell_content" data-x="9" data-y="4">
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr class="battlefield_row">
+                                <td class="battlefield_cell battlefield_cell_empty">
+                                    <div class="battlefield_cell_content" data-x="0" data-y="5">
+                                        <div class="marker marker_row">6</div>
+                                    </div>
+                                </td>
+                                <td class="battlefield_cell battlefield_cell_empty">
+                                    <div class="battlefield_cell_content" data-x="1" data-y="5">
+                                    </div>
+                                </td>
+                                <td class="battlefield_cell battlefield_cell_empty">
+                                    <div class="battlefield_cell_content" data-x="2" data-y="5">
+                                    </div>
+                                </td>
+                                <td class="battlefield_cell battlefield_cell_empty">
+                                    <div class="battlefield_cell_content" data-x="3" data-y="5">
+                                    </div>
+                                </td>
+                                <td class="battlefield_cell battlefield_cell_empty">
+                                    <div class="battlefield_cell_content" data-x="4" data-y="5">
+                                    </div>
+                                </td>
+                                <td class="battlefield_cell battlefield_cell_empty">
+                                    <div class="battlefield_cell_content" data-x="5" data-y="5">
+                                    </div>
+                                </td>
+                                <td class="battlefield_cell battlefield_cell_empty">
+                                    <div class="battlefield_cell_content" data-x="6" data-y="5">
+                                    </div>
+                                </td>
+                                <td class="battlefield_cell battlefield_cell_empty">
+                                    <div class="battlefield_cell_content" data-x="7" data-y="5">
+                                    </div>
+                                </td>
+                                <td class="battlefield_cell battlefield_cell_empty">
+                                    <div class="battlefield_cell_content" data-x="8" data-y="5">
+                                    </div>
+                                </td>
+                                <td class="battlefield_cell battlefield_cell_empty">
+                                    <div class="battlefield_cell_content" data-x="9" data-y="5">
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr class="battlefield_row">
+                                <td class="battlefield_cell battlefield_cell_empty">
+                                    <div class="battlefield_cell_content" data-x="0" data-y="6">
+                                        <div class="marker marker_row">7</div>
+                                    </div>
+                                </td>
+                                <td class="battlefield_cell battlefield_cell_empty">
+                                    <div class="battlefield_cell_content" data-x="1" data-y="6">
+                                    </div>
+                                </td>
+                                <td class="battlefield_cell battlefield_cell_empty">
+                                    <div class="battlefield_cell_content" data-x="2" data-y="6">
+                                    </div>
+                                </td>
+                                <td class="battlefield_cell battlefield_cell_empty">
+                                    <div class="battlefield_cell_content" data-x="3" data-y="6">
+                                    </div>
+                                </td>
+                                <td class="battlefield_cell battlefield_cell_empty">
+                                    <div class="battlefield_cell_content" data-x="4" data-y="6">
+                                    </div>
+                                </td>
+                                <td class="battlefield_cell battlefield_cell_empty">
+                                    <div class="battlefield_cell_content" data-x="5" data-y="6">
+                                    </div>
+                                </td>
+                                <td class="battlefield_cell battlefield_cell_empty">
+                                    <div class="battlefield_cell_content" data-x="6" data-y="6">
+                                    </div>
+                                </td>
+                                <td class="battlefield_cell battlefield_cell_empty">
+                                    <div class="battlefield_cell_content" data-x="7" data-y="6">
+                                    </div>
+                                </td>
+                                <td class="battlefield_cell battlefield_cell_empty">
+                                    <div class="battlefield_cell_content" data-x="8" data-y="6">
+                                    </div>
+                                </td>
+                                <td class="battlefield_cell battlefield_cell_empty">
+                                    <div class="battlefield_cell_content" data-x="9" data-y="6">
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr class="battlefield_row">
+                                <td class="battlefield_cell battlefield_cell_empty">
+                                    <div class="battlefield_cell_content" data-x="0" data-y="7">
+                                        <div class="marker marker_row">8</div>
+                                    </div>
+                                </td>
+                                <td class="battlefield_cell battlefield_cell_empty">
+                                    <div class="battlefield_cell_content" data-x="1" data-y="7">
+                                    </div>
+                                </td>
+                                <td class="battlefield_cell battlefield_cell_empty">
+                                    <div class="battlefield_cell_content" data-x="2" data-y="7">
+                                    </div>
+                                </td>
+                                <td class="battlefield_cell battlefield_cell_empty">
+                                    <div class="battlefield_cell_content" data-x="3" data-y="7">
+                                    </div>
+                                </td>
+                                <td class="battlefield_cell battlefield_cell_empty">
+                                    <div class="battlefield_cell_content" data-x="4" data-y="7">
+                                    </div>
+                                </td>
+                                <td class="battlefield_cell battlefield_cell_empty">
+                                    <div class="battlefield_cell_content" data-x="5" data-y="7">
+                                    </div>
+                                </td>
+                                <td class="battlefield_cell battlefield_cell_empty">
+                                    <div class="battlefield_cell_content" data-x="6" data-y="7">
+                                    </div>
+                                </td>
+                                <td class="battlefield_cell battlefield_cell_empty">
+                                    <div class="battlefield_cell_content" data-x="7" data-y="7">
+                                    </div>
+                                </td>
+                                <td class="battlefield_cell battlefield_cell_empty">
+                                    <div class="battlefield_cell_content" data-x="8" data-y="7">
+                                    </div>
+                                </td>
+                                <td class="battlefield_cell battlefield_cell_empty">
+                                    <div class="battlefield_cell_content" data-x="9" data-y="7">
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr class="battlefield_row">
+                                <td class="battlefield_cell battlefield_cell_empty">
+                                    <div class="battlefield_cell_content" data-x="0" data-y="8">
+                                        <div class="marker marker_row">9</div>
+                                    </div>
+                                </td>
+                                <td class="battlefield_cell battlefield_cell_empty">
+                                    <div class="battlefield_cell_content" data-x="1" data-y="8">
+                                    </div>
+                                </td>
+                                <td class="battlefield_cell battlefield_cell_empty">
+                                    <div class="battlefield_cell_content" data-x="2" data-y="8">
+                                    </div>
+                                </td>
+                                <td class="battlefield_cell battlefield_cell_empty">
+                                    <div class="battlefield_cell_content" data-x="3" data-y="8">
+                                    </div>
+                                </td>
+                                <td class="battlefield_cell battlefield_cell_empty">
+                                    <div class="battlefield_cell_content" data-x="4" data-y="8">
+                                    </div>
+                                </td>
+                                <td class="battlefield_cell battlefield_cell_empty">
+                                    <div class="battlefield_cell_content" data-x="5" data-y="8">
+                                    </div>
+                                </td>
+                                <td class="battlefield_cell battlefield_cell_empty">
+                                    <div class="battlefield_cell_content" data-x="6" data-y="8">
+                                    </div>
+                                </td>
+                                <td class="battlefield_cell battlefield_cell_empty">
+                                    <div class="battlefield_cell_content" data-x="7" data-y="8">
+                                    </div>
+                                </td>
+                                <td class="battlefield_cell battlefield_cell_empty">
+                                    <div class="battlefield_cell_content" data-x="8" data-y="8">
+                                    </div>
+                                </td>
+                                <td class="battlefield_cell battlefield_cell_empty">
+                                    <div class="battlefield_cell_content" data-x="9" data-y="8">
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr class="battlefield_row">
+                                <td class="battlefield_cell battlefield_cell_empty">
+                                    <div class="battlefield_cell_content" data-x="0" data-y="9">
+                                        <div class="marker marker_row">10</div>
+                                    </div>
+                                </td>
+                                <td class="battlefield_cell battlefield_cell_empty">
+                                    <div class="battlefield_cell_content" data-x="1" data-y="9">
+                                    </div>
+                                </td>
+                                <td class="battlefield_cell battlefield_cell_empty">
+                                    <div class="battlefield_cell_content" data-x="2" data-y="9">
+                                    </div>
+                                </td>
+                                <td class="battlefield_cell battlefield_cell_empty">
+                                    <div class="battlefield_cell_content" data-x="3" data-y="9">
+                                    </div>
+                                </td>
+                                <td class="battlefield_cell battlefield_cell_empty">
+                                    <div class="battlefield_cell_content" data-x="4" data-y="9">
+                                    </div>
+                                </td>
+                                <td class="battlefield_cell battlefield_cell_empty">
+                                    <div class="battlefield_cell_content" data-x="5" data-y="9">
+                                    </div>
+                                </td>
+                                <td class="battlefield_cell battlefield_cell_empty">
+                                    <div class="battlefield_cell_content" data-x="6" data-y="9">
+                                    </div>
+                                </td>
+                                <td class="battlefield_cell battlefield_cell_empty">
+                                    <div class="battlefield_cell_content" data-x="7" data-y="9">
+                                    </div>
+                                </td>
+                                <td class="battlefield_cell battlefield_cell_empty">
+                                    <div class="battlefield_cell_content" data-x="8" data-y="9">
+                                    </div>
+                                </td>
+                                <td class="battlefield_cell battlefield_cell_empty">
+                                    <div class="battlefield_cell_content" data-x="9" data-y="9">
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="battlefield_label">Opponent field</div>
+                <div id="battlefield_start" class="battlefield_start">
+                    <div class="battlefield_start_gap">
+                        <div id="battlefield_start_fields" class="battlefield_start_fields">
+                            <div class="battlefield_start_label">
+                                <label>It's a code of your game:</label>
+                            </div>
+                            </br>
+                            <input class="battlefield_start_textbox" type="text" id="guidField" value=@guid />
+                            </br>
+                            <label>(Paste code of custom game in this textbox)</label>
+                        </div>
+                        <input class="battlefield_start_button" type="button" id="playButton" value="Play" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
+<script src="~/Scripts/jquery-3.3.1.min.js"></script>
+<!--Ссылка на библиотеку SignalR -->
+<script src="~/Scripts/jquery.signalR-2.4.0.min.js"></script>
+<!--Ссылка на автоматически сгенерированный скрипт хаба SignalR -->
+<script src="~/signalr/hubs"></script>
+<script src="~/Scripts/util.js"></script>
 
-<div class="row">
-    <div class="col-md-4">
-        <h2>Getting started</h2>
-        <p>
-            ASP.NET MVC gives you a powerful, patterns-based way to build dynamic websites that
-            enables a clean separation of concerns and gives you full control over markup
-            for enjoyable, agile development.
-        </p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>
-    </div>
-    <div class="col-md-4">
-        <h2>Get more libraries</h2>
-        <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301866">Learn more &raquo;</a></p>
-    </div>
-    <div class="col-md-4">
-        <h2>Web Hosting</h2>
-        <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
-    </div>
-</div>
