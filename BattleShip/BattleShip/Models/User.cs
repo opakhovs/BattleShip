@@ -10,6 +10,8 @@ namespace BattleShip.Models
         public string ConnectionId { get; set; }
         public GameBoard GameBoard { get; set; }
 
+        public User() { }
+
         public User (string connectionId)
         {
             ConnectionId = connectionId;

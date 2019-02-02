@@ -56,6 +56,8 @@ namespace BattleShip.Models
                     result.InitializeSize(1).AddCoord(new Coord(shotCoord.Item1, shotCoord.Item2, FieldType.HIT));
                 else
                 {
+                    if (--shipNumber == 0)
+                        isShipsSunk = true;
                     result = CalculateSizeOfHitsAndCreateResult(ship, shotCoord);
                 }
 
