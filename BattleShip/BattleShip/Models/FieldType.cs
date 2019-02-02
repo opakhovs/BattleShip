@@ -5,8 +5,7 @@ using System.Web;
 
 namespace BattleShip.Models
 {
-    public enum FieldType
+    public class FieldType
     {
-        FREE, SHIP, MISS, HIT
     }
 }
