@@ -151,7 +151,12 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Hubs\GameHub.cs" />
+    <Compile Include="Models\Coord.cs" />
+    <Compile Include="Models\FieldType.cs" />
     <Compile Include="Models\Game.cs" />
+    <Compile Include="Models\GameBoard.cs" />
+    <Compile Include="Models\Result.cs" />
+    <Compile Include="Models\Ship.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
