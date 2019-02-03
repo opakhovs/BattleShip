@@ -13,7 +13,7 @@ namespace BattleShip.Hubs
         private static List<User> Users = new List<User>();
         private static List<Game> Games = new List<Game>();
 
-        public void Connect()
+        public async void ConnectAndGetTableCoords()
         {
             var id = Context.ConnectionId;
 
@@ -21,6 +21,7 @@ namespace BattleShip.Hubs
             {
                 User newUser = new User() { ConnectionId = id};
                 Users.Add(newUser);
+                await Clients.Client(id).getTableCoords(newUser.GameBoard.GetTableCoords());
             }
         }
 
@@ -32,6 +33,7 @@ namespace BattleShip.Hubs
             var game = getGameByGuid(guid);
             if (game.AddPlayer(newPlayer))
             {
+
                 await Groups.Add(idOfPlayer, guid.ToString());
 
                 if (game.HasTwoPlayers())

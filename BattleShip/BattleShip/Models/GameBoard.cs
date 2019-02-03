@@ -27,9 +27,23 @@ namespace BattleShip.Models
             FillShipsOnTable();
         }
 
+        public Result GetTableCoords()
+        {
+            Result result = new Result();
+            result.InitializeSize(100);
+            for (int i = 0; i < 10; i++)
+            {
+                for (int j = 0; j < 10; j++)
+                {
+                    result.AddCoord(coords[i, j]);
+                }
+            }
+            return result;
+        }
+
         public Result MakeFire(string shot)
         {
-            Tuple<int, int> shotCoord = parseShot(shot);
+            Tuple<int, int> shotCoord = ParseShot(shot);
             Result result = new Result();
             if (coords[shotCoord.Item1 - 1, shotCoord.Item2 - 1].CellType == FieldType.FREE)
             {
@@ -70,14 +84,20 @@ namespace BattleShip.Models
             int size = ship.Coords.Length;
             Result result = new Result();
             if (CheckIfShipIsOnCorner(ship, size))
-                size += 3;
+                size += 2;
             else if (CheckIfShipIsOnBorderWithSmallerSide(ship, size))
-                size = size + 5;
+                size = size * 2 + 3;
             else if (CheckIfShipIsOnBorderWithBiggerSide(ship, size))
-                size = size * 2 + 4;
+                size = size + 4;
             else
-                size = size * 2 + 7;
-            result.InitializeSize(size).AddCoord(new Coord(shootCoord.Item1, shootCoord.Item2, FieldType.HIT));
+                size = size * 2 + 6;
+            size += ship.Coords.Length;
+            result.InitializeSize(size);
+            for (int i = 0; i < ship.Coords.Length; i++)
+            {
+                ship.Coords[i].CellType = FieldType.SUNK;
+                result.AddCoord(ship.Coords[i]);
+            }
             return FillAroundShip(result, ship);
         }
 
@@ -149,7 +169,7 @@ namespace BattleShip.Models
             return false;
         }
 
-        private bool CheckIfShipIsOnBorderWithBiggerSide(Ship ship, int size)
+        private bool CheckIfShipIsOnBorderWithSmallerSide(Ship ship, int size)
         {
             if ((ship.Coords[0].Horizontal == 1 && ship.Coords[size - 1].Horizontal != 1) || (ship.Coords[0].Horizontal == 10 && ship.Coords[size - 1].Horizontal != 10) ||
                 (ship.Coords[0].Vertical == 1 && ship.Coords[size - 1].Vertical != 1) || (ship.Coords[0].Vertical == 10 && ship.Coords[size - 1].Vertical != 10))
@@ -157,7 +177,7 @@ namespace BattleShip.Models
             return false;
         }
 
-        private bool CheckIfShipIsOnBorderWithSmallerSide(Ship ship, int size)
+        private bool CheckIfShipIsOnBorderWithBiggerSide(Ship ship, int size)
         {
             if ((ship.Coords[0].Horizontal == 1 && ship.Coords[size - 1].Horizontal == 1) || (ship.Coords[0].Horizontal == 10 && ship.Coords[size - 1].Horizontal == 10) ||
                 (ship.Coords[0].Vertical == 1 && ship.Coords[size - 1].Vertical == 1) || (ship.Coords[0].Vertical == 10 && ship.Coords[size - 1].Vertical == 10))
@@ -165,7 +185,7 @@ namespace BattleShip.Models
             return false;
         }
 
-        private Tuple<int, int> parseShot(string shot)
+        private Tuple<int, int> ParseShot(string shot)
         {
             return new Tuple<int, int>(shot[0] - 64, Int32.Parse(shot.Remove(0, 1)));
         }

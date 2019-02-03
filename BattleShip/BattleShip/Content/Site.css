@@ -126,6 +126,10 @@ table {
     width: 2em;
 }
 
+.battlefield_cell_ship {
+    background: #d5efd6;
+}
+
 .marker {
     position: absolute;
     font-size: 11px;
