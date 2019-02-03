@@ -10,6 +10,7 @@
     $.connection.hub.start().done(function () {
         $('#playButton').click(function () {
             var result = gameHub.server.startGame($("#guidField").val());
+            $('#playButton').removeClass("battlefield_start_button").addClass("battlefield_start_button_disable");
             if (result) {
                 $('#battlefield_start_fields').addClass("battlefield_wait");
             }
