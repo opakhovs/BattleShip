@@ -204,7 +204,7 @@ table {
     display: inline-block;
 }
 
-.battlefield_start_button_disable {
+.battlefield_button_disable {
     cursor: not-allowed;
     pointer-events: none;
     color: #c0c0c0;
