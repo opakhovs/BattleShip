@@ -24,7 +24,7 @@ namespace BattleShip.Hubs
             }
         }
 
-        public bool StartGame(Guid guid)
+        public async Task<bool> StartGame(Guid guid)
         {
             var idOfPlayer = Context.ConnectionId;
             var newPlayer = Users.Find(u => u.ConnectionId == idOfPlayer);
@@ -32,11 +32,11 @@ namespace BattleShip.Hubs
             var game = getGameByGuid(guid);
             if (game.AddPlayer(newPlayer))
             {
-                Groups.Add(idOfPlayer, guid.ToString());
+                await Groups.Add(idOfPlayer, guid.ToString());
 
                 if (game.HasTwoPlayers())
                 {
-                    Clients.Group(guid.ToString()).startGame();
+                    await Clients.Group(guid.ToString()).startGame();
                 }
                 return true;
             }

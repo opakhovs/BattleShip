@@ -13,9 +13,9 @@ namespace BattleShip.Models
 
         public bool AddPlayer(User newPlayer)
         {
-            if (HasTwoPlayers())
+            if (HasTwoPlayers() || FirstPlayer == newPlayer || SecondPlayer == newPlayer)
                 return false;
-
+            
             var result = (FirstPlayer == null) ? FirstPlayer = newPlayer : SecondPlayer = newPlayer;
             return true;
         }
