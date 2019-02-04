@@ -35,7 +35,10 @@ namespace BattleShip.Models
             {
                 for (int j = 0; j < 10; j++)
                 {
-                    result.AddCoord(coords[i, j]);
+                    if (i == 6 && j == 9)
+                        result.AddCoord(coords[i, j]);
+                    else
+                        result.AddCoord(coords[i, j]);
                 }
             }
             return result;
@@ -192,11 +195,11 @@ namespace BattleShip.Models
 
         private void FillShipsOnTable()
         {
-            foreach (Ship ship in ships)
+            for (int i = 0; i < ships.Length; i++)
             {
-                for (int i = 0; i < ship.Coords.Length; i++)
+                for (int j = 0; j < ships[i].Coords.Length; j++)
                 {
-                    coords[ship.Coords[i].Horizontal - 1, ship.Coords[i].Vertical - 1].CellType = FieldType.SHIP;
+                    coords[ships[i].Coords[j].Horizontal - 1, ships[i].Coords[j].Vertical - 1].CellType = FieldType.SHIP;
                 }
             }
         }
@@ -221,7 +224,7 @@ namespace BattleShip.Models
             ships[2] = new Ship(new Coord[] { new Coord(6, 10, FieldType.SHIP), new Coord(7, 10, FieldType.SHIP), new Coord(8, 10, FieldType.SHIP) });
             ships[3] = new Ship(new Coord[] { new Coord(3, 1, FieldType.SHIP), new Coord(4, 1, FieldType.SHIP) });
             ships[4] = new Ship(new Coord[] { new Coord(1, 6, FieldType.SHIP), new Coord(2, 6, FieldType.SHIP) });
-            ships[5] = new Ship(new Coord[] { new Coord(7, 10, FieldType.SHIP), new Coord(8, 10, FieldType.SHIP) });
+            ships[5] = new Ship(new Coord[] { new Coord(10, 7, FieldType.SHIP), new Coord(10, 8, FieldType.SHIP) });
             ships[6] = new Ship(new Coord[] { new Coord(7, 1, FieldType.SHIP) });
             ships[7] = new Ship(new Coord[] { new Coord(3, 3, FieldType.SHIP) });
             ships[8] = new Ship(new Coord[] { new Coord(7, 8, FieldType.SHIP) });

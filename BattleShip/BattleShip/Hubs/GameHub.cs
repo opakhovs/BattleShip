@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Web.Script.Serialization;
 using System.Web;
 using BattleShip.Models;
 using Microsoft.AspNet.SignalR;
@@ -21,9 +22,14 @@ namespace BattleShip.Hubs
             {
                 User newUser = new User() { ConnectionId = id};
                 Users.Add(newUser);
-                await Clients.Client(id).getTableCoords(newUser.GameBoard.GetTableCoords());
+                await Clients.Client(id).displayResult(newUser.GameBoard.GetTableCoords());
             }
         }
+
+        public async void GetGuid()
+        {
+            await Clients.Caller.getGuid(Guid.NewGuid().ToString());
+        } 
 
         public async Task<bool> StartGame(Guid guid)
         {

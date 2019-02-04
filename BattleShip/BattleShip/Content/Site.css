@@ -127,7 +127,27 @@ table {
 }
 
 .battlefield_cell_ship {
+    border: 1px solid #b4b4ff;
+    padding: 0;
     background: #d5efd6;
+}
+
+.battlefield-cell__miss {
+    border: 1px solid #b4b4ff;
+    padding: 0;
+    background: #000000;
+}
+
+.battlefield-cell__hit {
+    border: 1px solid #b4b4ff;
+    padding: 0;
+    background: #ff6a00;
+}
+
+.battlefield-cell__sunk {
+    border: 1px solid #b4b4ff;
+    padding: 0;
+    background: #ff0000;
 }
 
 .marker {
