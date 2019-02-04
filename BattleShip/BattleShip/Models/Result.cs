@@ -9,8 +9,10 @@ namespace BattleShip.Models
     {
         Coord[] coords;
         int index;
+        bool isHit;
 
         public Coord[] Coords { get { return coords; } }
+        public bool IsHit { set { isHit = value; } get { return isHit; } }
 
         public Result()
         {

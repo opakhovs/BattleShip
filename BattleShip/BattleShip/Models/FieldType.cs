@@ -7,6 +7,6 @@ namespace BattleShip.Models
 {
     public enum FieldType
     {
-        FREE, SHIP, MISS, HIT
+        FREE, SHIP, MISS, HIT, SUNK
     }
 }

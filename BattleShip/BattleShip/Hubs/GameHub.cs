@@ -19,7 +19,7 @@ namespace BattleShip.Hubs
 
             if (!Users.Any(x => x.ConnectionId == id))
             {
-                User newUser = new User() { ConnectionId = id};
+                User newUser = new User(id);
                 Users.Add(newUser);
             }
         }
@@ -36,13 +36,34 @@ namespace BattleShip.Hubs
 
                 if (game.HasTwoPlayers())
                 {
-                    await Clients.Group(guid.ToString()).startGame();
+                    await Clients.Client(game.FirstPlayer.ConnectionId).startGame(isOurTurn: true);
+                    await Clients.Client(game.SecondPlayer.ConnectionId).startGame(isOurTurn: false);
                 }
                 return true;
             }
             else
             {
                 return false;
+            }
+        }
+        
+        public void TempMethod()
+        {
+            Clients.All.tempMethod();
+        }
+
+        public void Shoot(string vertical, string horizontal)
+        {
+            var playerWhoShoot = Users.Find(u => u.ConnectionId == Context.ConnectionId);
+            var game = Games.Find(g => (g.FirstPlayer == playerWhoShoot) || (g.SecondPlayer == playerWhoShoot));
+            var gameGuid = game.Guid.ToString();
+            var opponent = (game.FirstPlayer.ConnectionId == playerWhoShoot.ConnectionId) ? game.SecondPlayer : game.FirstPlayer;
+            var result = opponent.GameBoard.MakeFire(vertical, horizontal);
+            Clients.All.displayResult(result);
+            if (!result.IsHit)
+            {
+                Clients.Caller.changeTurn(false);
+                Clients.OthersInGroup(gameGuid).changeTurn(true);
             }
         }
 
