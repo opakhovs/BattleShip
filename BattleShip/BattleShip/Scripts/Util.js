@@ -10,13 +10,13 @@
     gameHub.client.displayResult = function (result) {
         for (var i = 0; i < Object.keys(result.coords).length; i++) {
             if (result.coords[i].FieldType == "SHIP") 
-                document.getElementById("your_table").rows[result.coords[i].Vertical - 1].cells[result.coords[i].Horizontal - 1].setAttribute('class', 'battlefield_cell_ship');
+                document.getElementById("your_table").rows[result.coords[i].Vertical].cells[result.coords[i].Horizontal].setAttribute('class', 'battlefield_cell_ship');
             else if (result.coords[i].FieldType == "MISS")
-                document.getElementById("your_table").rows[result.coords[i].Vertical - 1].cells[result.coords[i].Horizontal - 1].setAttribute('class', 'battlefield_cell_miss');
+                document.getElementById("your_table").rows[result.coords[i].Vertical].cells[result.coords[i].Horizontal].setAttribute('class', 'battlefield_cell_miss');
             else if (result.coords[i].FieldType == "HIT")
-                document.getElementById("your_table").rows[result.coords[i].Vertical - 1].cells[result.coords[i].Horizontal - 1].setAttribute('class', 'battlefield_cell_hit');
+                document.getElementById("your_table").rows[result.coords[i].Vertical].cells[result.coords[i].Horizontal].setAttribute('class', 'battlefield_cell_hit');
             else if (result.coords[i].FieldType == "SUNK")
-                document.getElementById("your_table").rows[result.coords[i].Vertical - 1].cells[result.coords[i].Horizontal - 1].setAttribute('class', 'battlefield_cell_sunk');
+                document.getElementById("your_table").rows[result.coords[i].Vertical].cells[result.coords[i].Horizontal].setAttribute('class', 'battlefield_cell_sunk');
         }
     };
 
@@ -46,6 +46,11 @@
                     else
                         gameHub.server.getGuid();
                 });
+            });
+            $(document).keydown(function (e) {
+                if ((e.keyCode == 65 && e.ctrlKey) || ((e.which || e.keyCode) == 116) || (e.keyCode == 27)) {
+                    alert("aaaa");
+                }
             });
         });
     });

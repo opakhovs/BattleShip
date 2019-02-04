@@ -35,9 +35,6 @@ namespace BattleShip.Models
             {
                 for (int j = 0; j < 10; j++)
                 {
-                    if (i == 6 && j == 9)
-                        result.AddCoord(coords[i, j]);
-                    else
                         result.AddCoord(coords[i, j]);
                 }
             }
@@ -48,14 +45,14 @@ namespace BattleShip.Models
         {
             Tuple<int, int> shotCoord = ParseShot(shot);
             Result result = new Result();
-            if (coords[shotCoord.Item1 - 1, shotCoord.Item2 - 1].CellType == FieldType.FREE)
+            if (coords[shotCoord.Item1, shotCoord.Item2].CellType == FieldType.FREE)
             {
                 result.InitializeSize(1).AddCoord(new Coord(shotCoord.Item1, shotCoord.Item2, FieldType.MISS));
-                coords[shotCoord.Item1 - 1, shotCoord.Item2 - 1].CellType = FieldType.MISS;
+                coords[shotCoord.Item1, shotCoord.Item2].CellType = FieldType.MISS;
             }
-            else if (coords[shotCoord.Item1 - 1, shotCoord.Item2 - 1].CellType == FieldType.SHIP)
+            else if (coords[shotCoord.Item1, shotCoord.Item2].CellType == FieldType.SHIP)
             {
-                coords[shotCoord.Item1 - 1, shotCoord.Item2 - 1].CellType = FieldType.HIT;
+                coords[shotCoord.Item1, shotCoord.Item2].CellType = FieldType.HIT;
                 Ship ship = null;
                 foreach (Ship temp in ships)
                 {
@@ -122,15 +119,15 @@ namespace BattleShip.Models
 
         private Result FillAroundCoord(Result result, Coord currentCoord, Coord leftOrUpOfCurrent, Coord rightOrDownOfCurrent)
         {
-            Coord coordOperate = new Coord(currentCoord.Horizontal - 1, currentCoord.Vertical - 1, FieldType.MISS);
+            Coord coordOperate = new Coord(currentCoord.Horizontal, currentCoord.Vertical, FieldType.MISS);
             OperateOnCoords operateOnCoords = IncrementHorizontalCoord;
             do
             {
-                if (coordOperate.Horizontal >= 1 && coordOperate.Horizontal <= 10 && coordOperate.Vertical >= 1 && coordOperate.Vertical <= 10 &&
+                if (coordOperate.Horizontal > -1 && coordOperate.Horizontal < 10 && coordOperate.Vertical > -1 && coordOperate.Vertical < 10 &&
                     !(leftOrUpOfCurrent == null || (coordOperate.Horizontal == leftOrUpOfCurrent.Horizontal && coordOperate.Vertical == leftOrUpOfCurrent.Vertical)) &&
                     !(rightOrDownOfCurrent == null || (coordOperate.Horizontal == rightOrDownOfCurrent.Horizontal && coordOperate.Vertical == rightOrDownOfCurrent.Vertical)))
                 {
-                    coords[coordOperate.Horizontal - 1, coordOperate.Vertical - 1].CellType = FieldType.MISS;
+                    coords[coordOperate.Horizontal, coordOperate.Vertical].CellType = FieldType.MISS;
                     result.AddCoord(new Coord(coordOperate.Horizontal, coordOperate.Vertical, coordOperate.CellType));
                 }
                 operateOnCoords(ref coordOperate);
@@ -166,24 +163,24 @@ namespace BattleShip.Models
 
         private bool CheckIfShipIsOnCorner(Ship ship, int size)
         {
-            if ((ship.Coords[0].Horizontal == 1 && ship.Coords[0].Vertical == 1) || (ship.Coords[0].Horizontal == 10 && ship.Coords[0].Vertical == 1) ||
-                (ship.Coords[0].Horizontal == 1 && ship.Coords[0].Vertical == 10) || (ship.Coords[size - 1].Horizontal == 10 && ship.Coords[size - 1].Vertical == 10))
+            if ((ship.Coords[0].Horizontal == 0 && ship.Coords[0].Vertical == 0) || (ship.Coords[0].Horizontal == 9 && ship.Coords[0].Vertical == 0) ||
+                (ship.Coords[0].Horizontal == 0 && ship.Coords[0].Vertical == 9) || (ship.Coords[size - 1].Horizontal == 9 && ship.Coords[size - 1].Vertical == 9))
                 return true;
             return false;
         }
 
         private bool CheckIfShipIsOnBorderWithSmallerSide(Ship ship, int size)
         {
-            if ((ship.Coords[0].Horizontal == 1 && ship.Coords[size - 1].Horizontal != 1) || (ship.Coords[0].Horizontal == 10 && ship.Coords[size - 1].Horizontal != 10) ||
-                (ship.Coords[0].Vertical == 1 && ship.Coords[size - 1].Vertical != 1) || (ship.Coords[0].Vertical == 10 && ship.Coords[size - 1].Vertical != 10))
+            if ((ship.Coords[0].Horizontal == 0 && ship.Coords[size - 1].Horizontal != 0) || (ship.Coords[0].Horizontal == 9 && ship.Coords[size - 1].Horizontal != 9) ||
+                (ship.Coords[0].Vertical == 0 && ship.Coords[size - 1].Vertical != 0) || (ship.Coords[0].Vertical == 9 && ship.Coords[size - 1].Vertical != 9))
                 return true;
             return false;
         }
 
         private bool CheckIfShipIsOnBorderWithBiggerSide(Ship ship, int size)
         {
-            if ((ship.Coords[0].Horizontal == 1 && ship.Coords[size - 1].Horizontal == 1) || (ship.Coords[0].Horizontal == 10 && ship.Coords[size - 1].Horizontal == 10) ||
-                (ship.Coords[0].Vertical == 1 && ship.Coords[size - 1].Vertical == 1) || (ship.Coords[0].Vertical == 10 && ship.Coords[size - 1].Vertical == 10))
+            if ((ship.Coords[0].Horizontal == 0 && ship.Coords[size - 1].Horizontal == 0) || (ship.Coords[0].Horizontal == 9 && ship.Coords[size - 1].Horizontal == 9) ||
+                (ship.Coords[0].Vertical == 0 && ship.Coords[size - 1].Vertical == 0) || (ship.Coords[0].Vertical == 9 && ship.Coords[size - 1].Vertical == 9))
                 return true;
             return false;
         }
@@ -199,7 +196,7 @@ namespace BattleShip.Models
             {
                 for (int j = 0; j < ships[i].Coords.Length; j++)
                 {
-                    coords[ships[i].Coords[j].Horizontal - 1, ships[i].Coords[j].Vertical - 1].CellType = FieldType.SHIP;
+                    coords[ships[i].Coords[j].Horizontal, ships[i].Coords[j].Vertical].CellType = FieldType.SHIP;
                 }
             }
         }
@@ -211,7 +208,7 @@ namespace BattleShip.Models
             {
                 for (int j = 0; j < 10; j++)
                 {
-                    coords[i, j] = new Coord(i + 1, j + 1, FieldType.FREE);
+                    coords[i, j] = new Coord(i, j, FieldType.FREE);
                 }
             }
         }
@@ -219,16 +216,16 @@ namespace BattleShip.Models
         private void GenerateShips()
         {
             ships = new Ship[10];
-            ships[0] = new Ship(new Coord[] { new Coord(10, 2, FieldType.SHIP), new Coord(10, 3, FieldType.SHIP), new Coord(10, 4, FieldType.SHIP), new Coord(10, 5, FieldType.SHIP) });
-            ships[1] = new Ship(new Coord[] { new Coord(5, 4, FieldType.SHIP), new Coord(6, 4, FieldType.SHIP), new Coord(7, 4, FieldType.SHIP) });
-            ships[2] = new Ship(new Coord[] { new Coord(6, 10, FieldType.SHIP), new Coord(7, 10, FieldType.SHIP), new Coord(8, 10, FieldType.SHIP) });
-            ships[3] = new Ship(new Coord[] { new Coord(3, 1, FieldType.SHIP), new Coord(4, 1, FieldType.SHIP) });
-            ships[4] = new Ship(new Coord[] { new Coord(1, 6, FieldType.SHIP), new Coord(2, 6, FieldType.SHIP) });
-            ships[5] = new Ship(new Coord[] { new Coord(10, 7, FieldType.SHIP), new Coord(10, 8, FieldType.SHIP) });
-            ships[6] = new Ship(new Coord[] { new Coord(7, 1, FieldType.SHIP) });
-            ships[7] = new Ship(new Coord[] { new Coord(3, 3, FieldType.SHIP) });
-            ships[8] = new Ship(new Coord[] { new Coord(7, 8, FieldType.SHIP) });
-            ships[9] = new Ship(new Coord[] { new Coord(3, 9, FieldType.SHIP) });
+            ships[0] = new Ship(new Coord[] { new Coord(9, 1, FieldType.SHIP), new Coord(9, 2, FieldType.SHIP), new Coord(9, 3, FieldType.SHIP), new Coord(9, 4, FieldType.SHIP) });
+            ships[1] = new Ship(new Coord[] { new Coord(4, 3, FieldType.SHIP), new Coord(5, 3, FieldType.SHIP), new Coord(6, 3, FieldType.SHIP) });
+            ships[2] = new Ship(new Coord[] { new Coord(5, 9, FieldType.SHIP), new Coord(6, 9, FieldType.SHIP), new Coord(7, 9, FieldType.SHIP) });
+            ships[3] = new Ship(new Coord[] { new Coord(2, 0, FieldType.SHIP), new Coord(3, 0, FieldType.SHIP) });
+            ships[4] = new Ship(new Coord[] { new Coord(0, 5, FieldType.SHIP), new Coord(1, 5, FieldType.SHIP) });
+            ships[5] = new Ship(new Coord[] { new Coord(9, 6, FieldType.SHIP), new Coord(9, 7, FieldType.SHIP) });
+            ships[6] = new Ship(new Coord[] { new Coord(6, 0, FieldType.SHIP) });
+            ships[7] = new Ship(new Coord[] { new Coord(2, 2, FieldType.SHIP) });
+            ships[8] = new Ship(new Coord[] { new Coord(6, 7, FieldType.SHIP) });
+            ships[9] = new Ship(new Coord[] { new Coord(2, 8, FieldType.SHIP) });
         }
 
     }
