@@ -9,7 +9,7 @@
         <div class="battlefield battlefield_self">
             <div class="battlefield_gap">
                 <div class="battlefield_table_placeholder">
-                    <table class="battlefield_table">
+                    <table class="battlefield_table" id="your_table">
                         <tbody>
                             <tr class="battlefield_row">
                                 <td class="battlefield_cell battlefield_cell_empty">
@@ -32,7 +32,7 @@
                                     <div class="battlefield_cell_content" data-x="3" data-y="0">
                                         <div class="marker marker_col">D</div>
                                     </div>
-                                </td>                              
+                                </td>
                                 <td class="battlefield_cell battlefield_cell_empty">
                                     <div class="battlefield_cell_content" data-x="4" data-y="0">
                                         <div class="marker marker_col">E</div>
@@ -918,6 +918,7 @@
                             <label>(Paste code of custom game in this textbox)</label>
                         </div>
                         <input class="battlefield_start_button" type="button" id="playButton" value="Play" />
+                        <input class="battlefield_generate_button" type="button" id="generateButton" value="Generate" />
                     </div>
                 </div>
             </div>
@@ -929,5 +930,4 @@
 <script src="~/Scripts/jquery.signalR-2.4.0.min.js"></script>
 <!--Ссылка на автоматически сгенерированный скрипт хаба SignalR -->
 <script src="~/signalr/hubs"></script>
-<script src="~/Scripts/util.js"></script>
-
+<script src="~/Scripts/util.js"></script>\

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -11,6 +12,7 @@ namespace BattleShip.Models
         int index;
         bool isHit;
 
+        [JsonProperty("coords")]
         public Coord[] Coords { get { return coords; } }
         public bool IsHit { set { isHit = value; } get { return isHit; } }
 

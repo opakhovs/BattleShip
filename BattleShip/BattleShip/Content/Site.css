@@ -126,6 +126,30 @@ table {
     width: 2em;
 }
 
+.battlefield_cell_ship {
+    border: 1px solid #b4b4ff;
+    padding: 0;
+    background: #d5efd6;
+}
+
+.battlefield-cell__miss {
+    border: 1px solid #b4b4ff;
+    padding: 0;
+    background: #000000;
+}
+
+.battlefield-cell__hit {
+    border: 1px solid #b4b4ff;
+    padding: 0;
+    background: #ff6a00;
+}
+
+.battlefield-cell__sunk {
+    border: 1px solid #b4b4ff;
+    padding: 0;
+    background: #ff0000;
+}
+
 .marker {
     position: absolute;
     font-size: 11px;
@@ -174,6 +198,21 @@ table {
     width: 248px;
 }
 
+.battlefield_generate_button {
+    border: 1px solid #d6d6d6;
+    background: #d5efd6;
+    background: linear-gradient(to bottom,rgba(225,250,225,1) 0,rgba(195,222,197,1) 100%);
+    margin: 1em 1em 0;
+    padding: .2em .8em;
+    font-size: 1.32em;
+    box-shadow: 0 2px 6px rgba(0,0,0,.25);
+    line-height: 1;
+    font-family: inherit;
+    cursor: pointer !important;
+    outline: 0;
+    display: inline-block;
+}
+
 .battlefield_start_button {
     border: 1px solid #d6d6d6;
     background: #d5efd6;
@@ -189,17 +228,8 @@ table {
     display: inline-block;
 }
 
-.battlefield_start_button_disable {
-    border: 1px solid #d6d6d6;
-    margin: 1em 0 0;
-    padding: .2em .8em;
-    font-size: 1.32em;
-    box-shadow: 0 2px 6px rgba(0,0,0,.25);
-    line-height: 1;
-    font-family: inherit;
+.battlefield_button_disable {
     cursor: not-allowed;
-    outline: 0;
-    display: inline-block;
     pointer-events: none;
     color: #c0c0c0;
     background-color: #ffffff;
