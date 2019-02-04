@@ -132,19 +132,19 @@ table {
     background: #d5efd6;
 }
 
-.battlefield-cell__miss {
+.battlefield_cell_miss {
     border: 1px solid #b4b4ff;
     padding: 0;
     background: #000000;
 }
 
-.battlefield-cell__hit {
+.battlefield_cell_hit {
     border: 1px solid #b4b4ff;
     padding: 0;
     background: #ff6a00;
 }
 
-.battlefield-cell__sunk {
+.battlefield_cell_sunk {
     border: 1px solid #b4b4ff;
     padding: 0;
     background: #ff0000;

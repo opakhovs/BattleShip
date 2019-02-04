@@ -43,7 +43,7 @@ namespace BattleShip.Models
 
         public Result MakeFire(string vertical, string horizontal)
         {
-            Tuple<int, int> shotCoord = new Tuple<int, int>(Int32.Parse(vertical), Int32.Parse(horizontal));
+            Tuple<int, int> shotCoord = new Tuple<int, int>(Int32.Parse(horizontal), Int32.Parse(vertical));
             Result result = new Result();
             result.IsHit = false;
             if (coords[shotCoord.Item1, shotCoord.Item2].CellType == FieldType.FREE)

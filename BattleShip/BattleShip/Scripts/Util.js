@@ -1,10 +1,17 @@
 ﻿$(function () {
-    // Ссылка на автоматически-сгенерированный прокси хаба
+
     var gameHub = $.connection.gameHub;
-    // Объявление функции, которая хаб вызывает при получении сообщений
-    gameHub.client.startGame = function () {
+    var isOurTurn;
+
+    gameHub.client.startGame = function (isOurTurn) {
         $('#battlefield_start').hide();
-        $('#battlefield_rival').removeClass("battlefield_wait");
+        if (isOurTurn) {
+            this.isOurTurn = true;
+            $('#battlefield_rival').removeClass("battlefield_wait");
+        }
+        else {
+            this.isOurTurn = false;
+        }
     };
 
     gameHub.client.displayResult = function (result) {
@@ -20,6 +27,15 @@
         }
     };
 
+    gameHub.client.changeTurn = function (nextIsOurTurn) {
+        if (nextIsOurTurn) {
+            $('#battlefield_rival').removeClass("battlefield_wait");
+        }
+        else {
+            $('#battlefield_rival').addClass("battlefield_wait");
+        }
+    };
+
     gameHub.client.getGuid = function (result) {
         $("#guidField").val(result);
         $('#playButton').removeClass("battlefield_button_disable");
@@ -27,6 +43,7 @@
     }
 
     $.connection.hub.start().done(function () {
+
         $('#playButton').click(function () {
             var result = gameHub.server.startGame($("#guidField").val());
             document.getElementById("playButton").disabled = true;
@@ -35,8 +52,19 @@
                 $('#battlefield_start_fields').addClass("battlefield_wait");
             }
         });
+
+        $("#table_rival").on("click", "td", function () {
+            var cellContent = $(this).find(".battlefield_cell_content");
+            var vertical = cellContent.data("y");
+            var horizontal = cellContent.data("x");
+            alert(vertical + "" + horizontal);
+            gameHub.server.shoot(vertical, horizontal);
+        }); 
+
         $(document).ready(function () {
+
             gameHub.server.connectAndGetTableCoords();
+
             $(document).ready(function () {
                 $("#generateButton").click(function () {
                     if (document.getElementById("playButton").disabled) {
@@ -47,11 +75,13 @@
                         gameHub.server.getGuid();
                 });
             });
+
             $(document).keydown(function (e) {
                 if ((e.keyCode == 65 && e.ctrlKey) || ((e.which || e.keyCode) == 116) || (e.keyCode == 27)) {
                     alert("aaaa");
                 }
             });
+
         });
     });
    
