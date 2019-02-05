@@ -110,7 +110,7 @@ namespace BattleShip.Models
                 if (i == 0 && ship.Coords.Length == 1)
                     FillAroundCoord(result, ship.Coords[i], null, null);
                 else if (i == 0)
-                    FillAroundCoord(result, ship.Coords[i], null, ship.Coords[1]);
+                    FillAroundCoord(result, ship.Coords[i], null, ship.Coords[i + 1]);
                 else if (i == ship.Coords.Length - 1)
                     FillAroundCoord(result, ship.Coords[i], ship.Coords[i - 1], null);
                 else
@@ -120,13 +120,13 @@ namespace BattleShip.Models
         }
         private Result FillAroundCoord(Result result, Coord currentCoord, Coord leftOrUpOfCurrent, Coord rightOrDownOfCurrent)
         {
-            Coord coordOperate = new Coord(currentCoord.Horizontal, currentCoord.Vertical, FieldType.MISS);
+            Coord coordOperate = new Coord(currentCoord.Horizontal - 1, currentCoord.Vertical - 1, FieldType.MISS);
             OperateOnCoords operateOnCoords = IncrementHorizontalCoord;
             do
             {
                 if (coordOperate.Horizontal > -1 && coordOperate.Horizontal < 10 && coordOperate.Vertical > -1 && coordOperate.Vertical < 10 &&
-                    !(leftOrUpOfCurrent == null || (coordOperate.Horizontal == leftOrUpOfCurrent.Horizontal && coordOperate.Vertical == leftOrUpOfCurrent.Vertical)) &&
-                    !(rightOrDownOfCurrent == null || (coordOperate.Horizontal == rightOrDownOfCurrent.Horizontal && coordOperate.Vertical == rightOrDownOfCurrent.Vertical)))
+                    !(leftOrUpOfCurrent != null && (coordOperate.Horizontal == leftOrUpOfCurrent.Horizontal && coordOperate.Vertical == leftOrUpOfCurrent.Vertical)) &&
+                    !(rightOrDownOfCurrent != null && (coordOperate.Horizontal == rightOrDownOfCurrent.Horizontal && coordOperate.Vertical == rightOrDownOfCurrent.Vertical)))
                 {
                     coords[coordOperate.Horizontal, coordOperate.Vertical].CellType = FieldType.MISS;
                     result.AddCoord(new Coord(coordOperate.Horizontal, coordOperate.Vertical, coordOperate.CellType));
@@ -138,18 +138,18 @@ namespace BattleShip.Models
                     operateOnCoords = DecrementHorizontalCoord;
                 else if (coordOperate.Horizontal == currentCoord.Horizontal - 1 && coordOperate.Vertical == currentCoord.Vertical + 1)
                     operateOnCoords = DecrementVerticalCoord;
-            } while (coordOperate.Horizontal == currentCoord.Horizontal - 1 && coordOperate.Vertical == currentCoord.Vertical - 1);
+            } while (!(coordOperate.Horizontal == currentCoord.Horizontal - 1 && coordOperate.Vertical == currentCoord.Vertical - 1));
             return result;
         }
 
         private void DecrementVerticalCoord(ref Coord coord)
         {
-            coord.Horizontal = coord.Vertical - 1;
+            coord.Vertical = coord.Vertical - 1;
         }
 
         private void IncrementVerticalCoord(ref Coord coord)
         {
-            coord.Horizontal = coord.Vertical + 1;
+            coord.Vertical = coord.Vertical + 1;
         }
 
         private void DecrementHorizontalCoord(ref Coord coord)

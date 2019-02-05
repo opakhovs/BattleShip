@@ -14,16 +14,21 @@
         }
     };
 
-    gameHub.client.displayResult = function (result) {
+    gameHub.client.displayResult = function (result, my_table) {
+        var table_to_change;
+        if (my_table == true)
+            table_to_change = document.getElementById("your_table");
+        else
+            table_to_change = document.getElementById("table_rival");
         for (var i = 0; i < Object.keys(result.coords).length; i++) {
             if (result.coords[i].FieldType == "SHIP") 
-                document.getElementById("your_table").rows[result.coords[i].Vertical].cells[result.coords[i].Horizontal].setAttribute('class', 'battlefield_cell_ship');
+                table_to_change.rows[result.coords[i].Vertical].cells[result.coords[i].Horizontal].setAttribute('class', 'battlefield_cell_ship');
             else if (result.coords[i].FieldType == "MISS")
-                document.getElementById("your_table").rows[result.coords[i].Vertical].cells[result.coords[i].Horizontal].setAttribute('class', 'battlefield_cell_miss');
+                table_to_change.rows[result.coords[i].Vertical].cells[result.coords[i].Horizontal].setAttribute('class', 'battlefield_cell_miss');
             else if (result.coords[i].FieldType == "HIT")
-                document.getElementById("your_table").rows[result.coords[i].Vertical].cells[result.coords[i].Horizontal].setAttribute('class', 'battlefield_cell_hit');
+                table_to_change.rows[result.coords[i].Vertical].cells[result.coords[i].Horizontal].setAttribute('class', 'battlefield_cell_hit');
             else if (result.coords[i].FieldType == "SUNK")
-                document.getElementById("your_table").rows[result.coords[i].Vertical].cells[result.coords[i].Horizontal].setAttribute('class', 'battlefield_cell_sunk');
+                table_to_change.rows[result.coords[i].Vertical].cells[result.coords[i].Horizontal].setAttribute('class', 'battlefield_cell_sunk');
         }
     };
 
@@ -35,6 +40,20 @@
             $('#battlefield_rival').addClass("battlefield_wait");
         }
     };
+
+    gameHub.client.showWin = function (isWin) {
+        if (isWin == true) {
+            if (confirm("Congratulations!!! You win!"))
+                var guid = $("#guidField").val();
+        }
+        else {
+            if (confirm("Congratulations!!! You win!"))
+                var guid = $("#guidField").val();
+        }
+        alert(guid);
+        window.location.reload();
+        $("#guidField").val(guid);
+    }
 
     gameHub.client.getGuid = function (result) {
         $("#guidField").val(result);
@@ -57,7 +76,6 @@
             var cellContent = $(this).find(".battlefield_cell_content");
             var vertical = cellContent.data("y");
             var horizontal = cellContent.data("x");
-            alert(vertical + "" + horizontal);
             gameHub.server.shoot(vertical, horizontal);
         }); 
 

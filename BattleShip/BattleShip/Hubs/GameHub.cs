@@ -22,7 +22,7 @@ namespace BattleShip.Hubs
             {
                 User newUser = new User(id);
                 Users.Add(newUser);
-                await Clients.Client(id).displayResult(newUser.GameBoard.GetTableCoords());
+                await Clients.Client(id).displayResult(newUser.GameBoard.GetTableCoords(), true);
             }
         }
 
@@ -60,18 +60,24 @@ namespace BattleShip.Hubs
             Clients.All.tempMethod();
         }
 
-        public void Shoot(string vertical, string horizontal)
+        public async void Shoot(string vertical, string horizontal)
         {
             var playerWhoShoot = Users.Find(u => u.ConnectionId == Context.ConnectionId);
             var game = Games.Find(g => (g.FirstPlayer == playerWhoShoot) || (g.SecondPlayer == playerWhoShoot));
             var gameGuid = game.Guid.ToString();
             var opponent = (game.FirstPlayer.ConnectionId == playerWhoShoot.ConnectionId) ? game.SecondPlayer : game.FirstPlayer;
             var result = opponent.GameBoard.MakeFire(vertical, horizontal);
-            Clients.All.displayResult(result);
+            Clients.Caller.displayResult(result, false);
+            Clients.OthersInGroup(gameGuid).displayResult(result, true);
             if (!result.IsHit)
             {
                 Clients.Caller.changeTurn(false);
                 Clients.OthersInGroup(gameGuid).changeTurn(true);
+            }
+            if (opponent.GameBoard.IsShipsSunk)
+            {
+                await Clients.Caller.showWin(true);
+                await Clients.OthersInGroup(gameGuid).showWin(false);
             }
         }
 

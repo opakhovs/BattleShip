@@ -31,6 +31,11 @@ namespace BattleShip.Models
         {
             if (index == coords.Length)
                 return false;
+            for (int i = 0; i < index; i++)
+            {
+                if (Coords[i].Horizontal == coord.Horizontal && Coords[i].Vertical == coord.Vertical)
+                    return false;
+            }
             coords[index++] = coord;
             return true;
         }
