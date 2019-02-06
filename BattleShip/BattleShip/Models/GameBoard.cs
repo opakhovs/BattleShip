@@ -23,7 +23,7 @@ namespace BattleShip.Models
             shipNumber = 10;
             isShipsSunk = false;
             GenerateFreeCoords();
-            GenerateShips();
+            GenerateShips(new Random().Next(1, 5));
             FillShipsOnTable();
         }
 
@@ -209,7 +209,21 @@ namespace BattleShip.Models
             }
         }
 
-        private void GenerateShips()
+        private void GenerateShips(int randomValue)
+        {
+            if (randomValue == 1)
+                GenerateShipsFirstVariant();
+            else if (randomValue == 2)
+                GenerateShipsSecondVariant();
+            else if (randomValue == 3)
+                GenerateShipsThirdVariant();
+            else if (randomValue == 4)
+                GenerateShipsFourthVariant();
+            else
+                GenerateShipsFifthVariant();
+        }
+
+        private void GenerateShipsFirstVariant()
         {
             ships = new Ship[10];
             ships[0] = new Ship(new Coord[] { new Coord(9, 1, FieldType.SHIP), new Coord(9, 2, FieldType.SHIP), new Coord(9, 3, FieldType.SHIP), new Coord(9, 4, FieldType.SHIP) });
@@ -222,6 +236,67 @@ namespace BattleShip.Models
             ships[7] = new Ship(new Coord[] { new Coord(2, 2, FieldType.SHIP) });
             ships[8] = new Ship(new Coord[] { new Coord(6, 7, FieldType.SHIP) });
             ships[9] = new Ship(new Coord[] { new Coord(2, 8, FieldType.SHIP) });
+        }
+
+        private void GenerateShipsSecondVariant()
+        {
+            ships = new Ship[10];
+            ships[0] = new Ship(new Coord[] { new Coord(3, 4, FieldType.SHIP), new Coord(4, 4, FieldType.SHIP), new Coord(5, 4, FieldType.SHIP), new Coord(6, 4, FieldType.SHIP) });
+            ships[1] = new Ship(new Coord[] { new Coord(1, 7, FieldType.SHIP), new Coord(2, 7, FieldType.SHIP), new Coord(3, 7, FieldType.SHIP) });
+            ships[2] = new Ship(new Coord[] { new Coord(4, 9, FieldType.SHIP), new Coord(5, 9, FieldType.SHIP), new Coord(6, 9, FieldType.SHIP) });
+            ships[3] = new Ship(new Coord[] { new Coord(5, 0, FieldType.SHIP), new Coord(5, 1, FieldType.SHIP) });
+            ships[4] = new Ship(new Coord[] { new Coord(7, 0, FieldType.SHIP), new Coord(7, 1, FieldType.SHIP) });
+            ships[5] = new Ship(new Coord[] { new Coord(1, 2, FieldType.SHIP), new Coord(1, 3, FieldType.SHIP) });
+            ships[6] = new Ship(new Coord[] { new Coord(9, 5, FieldType.SHIP) });
+            ships[7] = new Ship(new Coord[] { new Coord(7, 6, FieldType.SHIP) });
+            ships[8] = new Ship(new Coord[] { new Coord(9, 8, FieldType.SHIP) });
+            ships[9] = new Ship(new Coord[] { new Coord(1, 9, FieldType.SHIP) });
+        }
+
+        private void GenerateShipsThirdVariant()
+        {
+            ships = new Ship[10];
+            ships[0] = new Ship(new Coord[] { new Coord(7, 3, FieldType.SHIP), new Coord(7, 4, FieldType.SHIP), new Coord(7, 5, FieldType.SHIP), new Coord(7, 6, FieldType.SHIP) });
+            ships[1] = new Ship(new Coord[] { new Coord(3, 2, FieldType.SHIP), new Coord(4, 2, FieldType.SHIP), new Coord(5, 2, FieldType.SHIP) });
+            ships[2] = new Ship(new Coord[] { new Coord(1, 3, FieldType.SHIP), new Coord(1, 4, FieldType.SHIP), new Coord(1, 5, FieldType.SHIP) });
+            ships[3] = new Ship(new Coord[] { new Coord(8, 0, FieldType.SHIP), new Coord(8, 1, FieldType.SHIP) });
+            ships[4] = new Ship(new Coord[] { new Coord(4, 5, FieldType.SHIP), new Coord(4, 6, FieldType.SHIP) });
+            ships[5] = new Ship(new Coord[] { new Coord(6, 8, FieldType.SHIP), new Coord(6, 9, FieldType.SHIP) });
+            ships[6] = new Ship(new Coord[] { new Coord(1, 0, FieldType.SHIP) });
+            ships[7] = new Ship(new Coord[] { new Coord(9, 5, FieldType.SHIP) });
+            ships[8] = new Ship(new Coord[] { new Coord(1, 7, FieldType.SHIP) });
+            ships[9] = new Ship(new Coord[] { new Coord(9, 9, FieldType.SHIP) });
+        }
+
+        private void GenerateShipsFourthVariant()
+        {
+            ships = new Ship[10];
+            ships[0] = new Ship(new Coord[] { new Coord(6, 8, FieldType.SHIP), new Coord(7, 8, FieldType.SHIP), new Coord(8, 8, FieldType.SHIP), new Coord(9, 8, FieldType.SHIP) });
+            ships[1] = new Ship(new Coord[] { new Coord(2, 4, FieldType.SHIP), new Coord(3, 4, FieldType.SHIP), new Coord(4, 4, FieldType.SHIP) });
+            ships[2] = new Ship(new Coord[] { new Coord(5, 6, FieldType.SHIP), new Coord(6, 6, FieldType.SHIP), new Coord(7, 6, FieldType.SHIP) });
+            ships[3] = new Ship(new Coord[] { new Coord(0, 1, FieldType.SHIP), new Coord(1, 1, FieldType.SHIP) });
+            ships[4] = new Ship(new Coord[] { new Coord(6, 3, FieldType.SHIP), new Coord(7, 3, FieldType.SHIP) });
+            ships[5] = new Ship(new Coord[] { new Coord(0, 6, FieldType.SHIP), new Coord(0, 7, FieldType.SHIP) });
+            ships[6] = new Ship(new Coord[] { new Coord(5, 1, FieldType.SHIP) });
+            ships[7] = new Ship(new Coord[] { new Coord(2, 6, FieldType.SHIP) });
+            ships[8] = new Ship(new Coord[] { new Coord(4, 8, FieldType.SHIP) });
+            ships[9] = new Ship(new Coord[] { new Coord(1, 9, FieldType.SHIP) });
+        }
+
+
+        private void GenerateShipsFifthVariant()
+        {
+            ships = new Ship[10];
+            ships[0] = new Ship(new Coord[] { new Coord(2, 5, FieldType.SHIP), new Coord(2, 6, FieldType.SHIP), new Coord(2, 7, FieldType.SHIP), new Coord(2, 8, FieldType.SHIP) });
+            ships[1] = new Ship(new Coord[] { new Coord(3, 1, FieldType.SHIP), new Coord(3, 2, FieldType.SHIP), new Coord(3, 3, FieldType.SHIP) });
+            ships[2] = new Ship(new Coord[] { new Coord(6, 8, FieldType.SHIP), new Coord(7, 8, FieldType.SHIP), new Coord(8, 8, FieldType.SHIP) });
+            ships[3] = new Ship(new Coord[] { new Coord(8, 0, FieldType.SHIP), new Coord(8, 1, FieldType.SHIP) });
+            ships[4] = new Ship(new Coord[] { new Coord(9, 3, FieldType.SHIP), new Coord(9, 4, FieldType.SHIP) });
+            ships[5] = new Ship(new Coord[] { new Coord(5, 4, FieldType.SHIP), new Coord(6, 4, FieldType.SHIP) });
+            ships[6] = new Ship(new Coord[] { new Coord(0, 3, FieldType.SHIP) });
+            ships[7] = new Ship(new Coord[] { new Coord(0, 5, FieldType.SHIP) });
+            ships[8] = new Ship(new Coord[] { new Coord(9, 6, FieldType.SHIP) });
+            ships[9] = new Ship(new Coord[] { new Coord(9, 8, FieldType.SHIP) });
         }
     }
 }

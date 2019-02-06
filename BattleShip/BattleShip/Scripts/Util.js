@@ -97,6 +97,7 @@
 
             $(".notification_submit_restart").click(function () {
                 sessionStorage["guid"] = $("#guidField").val();
+                window.removeEventListener('beforeunload', notification_function, false);
                 window.location.reload();
                 $("#guidField").val(sessionStorage["guid"]);
             });
