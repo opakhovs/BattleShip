@@ -37,9 +37,16 @@ namespace BattleShip.Hubs
             var newPlayer = Users.Find(u => u.ConnectionId == idOfPlayer);
 
             var game = getGameByGuid(guid);
+            foreach (Game gameDelete in Games)
+            {
+                if (game != gameDelete && (gameDelete.FirstPlayer == newPlayer || gameDelete.SecondPlayer == newPlayer))
+                {
+                    Games.Remove(gameDelete);
+                    break;
+                }
+            }
             if (game.AddPlayer(newPlayer))
             {
-
                 await Groups.Add(idOfPlayer, guid.ToString());
 
                 if (game.HasTwoPlayers())
@@ -54,16 +61,11 @@ namespace BattleShip.Hubs
                 return false;
             }
         }
-        
-        public void TempMethod()
-        {
-            Clients.All.tempMethod();
-        }
 
         public async void Shoot(string vertical, string horizontal)
         {
             var playerWhoShoot = Users.Find(u => u.ConnectionId == Context.ConnectionId);
-            var game = Games.Find(g => (g.FirstPlayer == playerWhoShoot) || (g.SecondPlayer == playerWhoShoot));
+            var game = Games.Find(g => ((g.FirstPlayer == playerWhoShoot) || (g.SecondPlayer == playerWhoShoot)) && ((g.FirstPlayer != null) || (g.SecondPlayer != null)));
             var gameGuid = game.Guid.ToString();
             var opponent = (game.FirstPlayer.ConnectionId == playerWhoShoot.ConnectionId) ? game.SecondPlayer : game.FirstPlayer;
             var result = opponent.GameBoard.MakeFire(vertical, horizontal);
@@ -76,8 +78,11 @@ namespace BattleShip.Hubs
             }
             if (opponent.GameBoard.IsShipsSunk)
             {
-                await Clients.Caller.showWin(true);
-                await Clients.OthersInGroup(gameGuid).showWin(false);
+                await Clients.Caller.showWin(isWin : true);
+                await Clients.OthersInGroup(gameGuid).showWin(isWin : false);
+                Users.Remove(opponent);
+                Users.Remove((game.FirstPlayer.ConnectionId == playerWhoShoot.ConnectionId) ? game.FirstPlayer : game.SecondPlayer);
+                Games.Remove(game);
             }
         }
 

@@ -1,16 +1,11 @@
 ﻿$(function () {
 
     var gameHub = $.connection.gameHub;
-    var isOurTurn;
 
     gameHub.client.startGame = function (isOurTurn) {
         $('#battlefield_start').hide();
         if (isOurTurn) {
-            this.isOurTurn = true;
             $('#battlefield_rival').removeClass("battlefield_wait");
-        }
-        else {
-            this.isOurTurn = false;
         }
     };
 
@@ -22,13 +17,13 @@
             table_to_change = document.getElementById("table_rival");
         for (var i = 0; i < Object.keys(result.coords).length; i++) {
             if (result.coords[i].FieldType == "SHIP") 
-                table_to_change.rows[result.coords[i].Vertical].cells[result.coords[i].Horizontal].setAttribute('class', 'battlefield_cell_ship');
+                table_to_change.rows[result.coords[i].Vertical].cells[result.coords[i].Horizontal].setAttribute('class', 'battlefield_cell battlefield_cell_ship');
             else if (result.coords[i].FieldType == "MISS")
-                table_to_change.rows[result.coords[i].Vertical].cells[result.coords[i].Horizontal].setAttribute('class', 'battlefield_cell_miss');
+                table_to_change.rows[result.coords[i].Vertical].cells[result.coords[i].Horizontal].setAttribute('class', 'battlefield_cell battlefield_cell_miss');
             else if (result.coords[i].FieldType == "HIT")
-                table_to_change.rows[result.coords[i].Vertical].cells[result.coords[i].Horizontal].setAttribute('class', 'battlefield_cell_hit');
+                table_to_change.rows[result.coords[i].Vertical].cells[result.coords[i].Horizontal].setAttribute('class', 'battlefield_cell battlefield_cell_hit');
             else if (result.coords[i].FieldType == "SUNK")
-                table_to_change.rows[result.coords[i].Vertical].cells[result.coords[i].Horizontal].setAttribute('class', 'battlefield_cell_sunk');
+                table_to_change.rows[result.coords[i].Vertical].cells[result.coords[i].Horizontal].setAttribute('class', 'battlefield_cell battlefield_cell_sunk');
         }
     };
 
@@ -42,17 +37,11 @@
     };
 
     gameHub.client.showWin = function (isWin) {
-        if (isWin == true) {
-            if (confirm("Congratulations!!! You win!"))
-                var guid = $("#guidField").val();
-        }
-        else {
-            if (confirm("Congratulations!!! You win!"))
-                var guid = $("#guidField").val();
-        }
-        alert(guid);
-        window.location.reload();
-        $("#guidField").val(guid);
+        if (isWin == true)
+            $("#notification-game-win").removeClass("none");
+        else
+            $("#notification-game-lost").removeClass("none");
+        $('#battlefield_rival').addClass("battlefield_wait");
     }
 
     gameHub.client.getGuid = function (result) {
@@ -83,6 +72,14 @@
 
             gameHub.server.connectAndGetTableCoords();
 
+            if (sessionStorage["guid"] != null)
+                $("#guidField").val(sessionStorage["guid"]);
+            $(".notification_submit_restart").click(function () {
+                sessionStorage["guid"] = $("#guidField").val();
+                window.location.reload();
+                $("#guidField").val(sessionStorage["guid"]);
+            });
+
             $(document).ready(function () {
                 $("#generateButton").click(function () {
                     if (document.getElementById("playButton").disabled) {
@@ -92,12 +89,6 @@
                     else
                         gameHub.server.getGuid();
                 });
-            });
-
-            $(document).keydown(function (e) {
-                if ((e.keyCode == 65 && e.ctrlKey) || ((e.which || e.keyCode) == 116) || (e.keyCode == 27)) {
-                    alert("aaaa");
-                }
             });
 
         });
