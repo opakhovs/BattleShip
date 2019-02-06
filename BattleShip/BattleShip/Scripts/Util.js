@@ -29,7 +29,7 @@
             else if (result.coords[i].FieldType == "HIT")
                 table_to_change.rows[result.coords[i].Vertical].cells[result.coords[i].Horizontal].setAttribute('class', 'battlefield_cell battlefield_cell_hit');
             else if (result.coords[i].FieldType == "SUNK")
-                table_to_change.rows[result.coords[i].Vertical].cells[result.coords[i].Horizontal].setAttribute('class', 'battlefield_cell battlefield_cell_sunk');
+                table_to_change.rows[result.coords[i].Vertical].cells[result.coords[i].Horizontal].setAttribute('class', 'battlefield_cell battlefield_cell_hit battlefield_cell_sunk');
         }
     };
 
@@ -81,7 +81,7 @@
             var horizontal = cellContent.data("x");
             gameHub.server.shoot(vertical, horizontal);
         }); 
-
+       
         $(document).ready(function () {
 
             gameHub.server.connectAndGetTableCoords();

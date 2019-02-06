@@ -23,10 +23,20 @@ textarea {
     max-width: 280px;
 }
 
+.logo {
+    display: inline-block;
+    position: center;
+    
+    top: 20px;
+    font-weight: 700;
+    font-size: 1.5em;
+    line-height: 1;
+}
+
 .notifications {
     margin: 10px auto;
     width: 400px;
-    height: 100px;
+    height: 20px;
 }
 
 .notification {
@@ -37,11 +47,13 @@ textarea {
 }
 
 .notification__game-over-lose {
+    top: 10px;
     background: red;
     color: #fff;
 }
 
 .notification__game-over-win {
+    top: 10px;
     background: green;
     color: #fff;
 }
@@ -159,13 +171,25 @@ table {
 }
 
 .battlefield_cell_ship {
-    border: 1px solid #b4b4ff;
+    border: 2px solid #00f;
     padding: 0;
     background: #d5efd6;
 }
 
 .battlefield_cell_miss {
     pointer-events: none;
+    background: rgba(255,0,0,.05);
+}
+
+.battlefield_cell_hit {
+    pointer-events: none;
+    background: rgba(255,0,0,.05);
+}
+
+.battlefield_cell_sunk {
+    pointer-events: none; 
+    background: rgba(255,0,0,.05);
+    border: 2px solid red;
 }
 
 .battlefield_cell_miss .battlefield_cell_content .z {
@@ -180,7 +204,50 @@ table {
     margin-left: -2px;
 }
 
-.table_rival .battlefield_cell_empty:hover .battlefield_cell_content:after {
+.battlefield_cell_hit .battlefield_cell_content .z {
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1;
+    overflow: hidden;
+    box-sizing: border-box;
+}
+
+.battlefield_cell_hit .battlefield_cell_content .z:before {
+    left: 50%;
+    width: 2px;
+    top: -25%;
+    height: 150%;
+    margin-top: 1px;
+}
+
+.battlefield_cell_hit .battlefield_cell_content .z:after {
+    top: 50%;
+    height: 2px;
+    left: -25%;
+    width: 150%;
+    margin-left: -1px;
+}
+
+.battlefield_cell_hit .battlefield_cell_content .z:after, .battlefield_cell_hit .battlefield_cell_content .z:before {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    background: red;
+    -webkit-transform: rotate(-45deg);
+    -moz-transform: rotate(-45deg);
+    -ms-transform: rotate(-45deg);
+    transform: rotate(-45deg);
+}
+
+.battlefield_rival .battlefield_cell_empty:hover .battlefield_cell_content {
+    cursor: pointer;
+    position: relative
+}
+
+.battlefield_rival .battlefield_cell_empty:hover .battlefield_cell_content:after {
     border: 2px solid #40bf44;
     background: rgba(64,191,68,.05);
     position: absolute;
@@ -188,23 +255,10 @@ table {
     height: 2em;
     top: 0;
     left: 0;
-    margin: -2px;
     content: "";
     display: block;
     cursor: pointer;
-    z-index: 2;
-}
-
-.battlefield_cell_hit {
-    border: 1px solid #b4b4ff;
-    padding: 0;
-    background: #ff6a00;
-}
-
-.battlefield_cell_sunk {
-    border: 1px solid #b4b4ff;
-    padding: 0;
-    background: #ff0000;
+    z-index: 2
 }
 
 .marker {
