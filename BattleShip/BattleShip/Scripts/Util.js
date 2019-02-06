@@ -57,6 +57,7 @@
     }
 
     gameHub.client.makeReload = function () {
+        alert("Your opponent left the game...");
         sessionStorage["guid"] = $("#guidField").val();
         window.removeEventListener('beforeunload', notification_function, false);
         window.location.reload();
