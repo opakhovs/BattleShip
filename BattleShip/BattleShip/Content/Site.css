@@ -164,6 +164,10 @@ table {
     background: #d5efd6;
 }
 
+.battlefield_cell_miss {
+    pointer-events: none;
+}
+
 .battlefield_cell_miss .battlefield_cell_content .z {
     position: absolute;
     top: 50%;

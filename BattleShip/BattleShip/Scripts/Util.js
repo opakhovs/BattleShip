@@ -2,7 +2,13 @@
 
     var gameHub = $.connection.gameHub;
 
+    var notification_function = function () {
+            sessionStorage["reloaded"] = true;
+            event.returnValue = '';
+           }
+
     gameHub.client.startGame = function (isOurTurn) {
+        sessionStorage["guid"] = $("#guidField").val();
         $('#battlefield_start').hide();
         if (isOurTurn) {
             $('#battlefield_rival').removeClass("battlefield_wait");
@@ -50,6 +56,13 @@
         document.getElementById("playButton").disabled = false;
     }
 
+    gameHub.client.makeReload = function () {
+        sessionStorage["guid"] = $("#guidField").val();
+        window.removeEventListener('beforeunload', notification_function, false);
+        window.location.reload();
+        $("#guidField").val(sessionStorage["guid"]);
+    }
+
     $.connection.hub.start().done(function () {
 
         $('#playButton').click(function () {
@@ -72,25 +85,29 @@
 
             gameHub.server.connectAndGetTableCoords();
 
+            window.addEventListener('beforeunload', notification_function, false);
+
             if (sessionStorage["guid"] != null)
                 $("#guidField").val(sessionStorage["guid"]);
+
+            if (sessionStorage["reloaded"] == "true") {
+                gameHub.server.endGameUserCancelGame(sessionStorage["guid"]);
+            }
+
             $(".notification_submit_restart").click(function () {
                 sessionStorage["guid"] = $("#guidField").val();
                 window.location.reload();
                 $("#guidField").val(sessionStorage["guid"]);
             });
 
-            $(document).ready(function () {
-                $("#generateButton").click(function () {
-                    if (document.getElementById("playButton").disabled) {
-                        if (confirm("Press 'OK' to generate new game, this game wiil be lost"))
-                            gameHub.server.getGuid();
-                    }
-                    else
+            $("#generateButton").click(function () {
+                if (document.getElementById("playButton").disabled) {
+                    if (confirm("Press 'OK' to generate new game, this game wiil be lost"))
                         gameHub.server.getGuid();
-                });
+                }
+                else
+                    gameHub.server.getGuid();
             });
-
         });
     });
    

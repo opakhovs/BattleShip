@@ -14,7 +14,7 @@ namespace BattleShip.Hubs
         private static List<User> Users = new List<User>();
         private static List<Game> Games = new List<Game>();
 
-        public async void ConnectAndGetTableCoords()
+        public async Task ConnectAndGetTableCoords()
         {
             var id = Context.ConnectionId;
 
@@ -26,7 +26,7 @@ namespace BattleShip.Hubs
             }
         }
 
-        public async void GetGuid()
+        public async Task GetGuid()
         {
             await Clients.Caller.getGuid(Guid.NewGuid().ToString());
         } 
@@ -62,7 +62,7 @@ namespace BattleShip.Hubs
             }
         }
 
-        public async void Shoot(string vertical, string horizontal)
+        public async Task Shoot(string vertical, string horizontal)
         {
             var playerWhoShoot = Users.Find(u => u.ConnectionId == Context.ConnectionId);
             var game = Games.Find(g => ((g.FirstPlayer == playerWhoShoot) || (g.SecondPlayer == playerWhoShoot)) && ((g.FirstPlayer != null) || (g.SecondPlayer != null)));
@@ -84,6 +84,15 @@ namespace BattleShip.Hubs
                 Users.Remove((game.FirstPlayer.ConnectionId == playerWhoShoot.ConnectionId) ? game.FirstPlayer : game.SecondPlayer);
                 Games.Remove(game);
             }
+        }
+
+        public async Task endGameUserCancelGame(Guid guid)
+        {
+            var game = Games.Find(g => (g.Guid.CompareTo(guid) == 0));
+            Users.Remove(game.FirstPlayer);
+            Users.Remove(game.SecondPlayer);
+            Games.Remove(game);
+            await Clients.OthersInGroup(guid.ToString()).makeReload();
         }
 
         private Game getGameByGuid(Guid guid)
